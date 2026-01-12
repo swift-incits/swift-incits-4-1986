@@ -143,7 +143,7 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
     }
 }
 
-extension INCITS_4_1986.ASCII where Source: BidirectionalCollection, Source.Element == UInt8 {
+extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 {
     /// Trims ASCII bytes from both ends of the collection
     ///
     /// Removes leading and trailing bytes that match the given character set.
