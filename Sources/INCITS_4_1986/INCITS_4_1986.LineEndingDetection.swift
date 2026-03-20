@@ -46,7 +46,7 @@ extension INCITS_4_1986.LineEndingDetection {
     /// - Parameter string: The string to analyze
     /// - Returns: The detected line ending type, or `nil` if none found
     @inlinable
-    public static func detect<S: StringProtocol>(_ string: S) -> INCITS_4_1986.FormatEffectors.LineEnding? {
+    public static func detect<S: StringProtocol>(_ string: S) -> INCITS_4_1986.FormatEffectors.Line.Ending? {
         // Byte-based detection for embedded Swift compatibility
         let bytes = Array(string.utf8)
         var hasCR = false
@@ -55,13 +55,13 @@ extension INCITS_4_1986.LineEndingDetection {
         var i = 0
         while i < bytes.count {
             let byte = bytes[i]
-            if byte == INCITS_4_1986.ControlCharacters.cr {
+            if byte == INCITS_4_1986.Character.Control.cr {
                 // Check if this CR is part of CRLF
-                if i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.ControlCharacters.lf {
+                if i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.Character.Control.lf {
                     return .crlf  // CRLF takes precedence
                 }
                 hasCR = true
-            } else if byte == INCITS_4_1986.ControlCharacters.lf {
+            } else if byte == INCITS_4_1986.Character.Control.lf {
                 hasLF = true
             }
             i += 1
@@ -111,9 +111,9 @@ extension INCITS_4_1986.LineEndingDetection {
         while i < bytes.count {
             let byte = bytes[i]
 
-            if byte == INCITS_4_1986.ControlCharacters.cr {
+            if byte == INCITS_4_1986.Character.Control.cr {
                 // Check if this CR is part of CRLF
-                if i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.ControlCharacters.lf {
+                if i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.Character.Control.lf {
                     hasCRLF = true
                     i += 2  // Skip both CR and LF
                     continue
@@ -122,7 +122,7 @@ extension INCITS_4_1986.LineEndingDetection {
                     i += 1
                     continue
                 }
-            } else if byte == INCITS_4_1986.ControlCharacters.lf {
+            } else if byte == INCITS_4_1986.Character.Control.lf {
                 hasStandaloneLF = true
                 i += 1
                 continue

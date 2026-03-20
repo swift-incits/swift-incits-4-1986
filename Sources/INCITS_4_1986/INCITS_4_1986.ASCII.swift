@@ -206,7 +206,7 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
 
         while let s = sourceIterator.next(), let o = otherIterator.next() {
             // Use single-byte lowercased() - no allocation
-            guard INCITS_4_1986.CaseConversion.convert(s, to: .lower) == INCITS_4_1986.CaseConversion.convert(o, to: .lower) else {
+            guard INCITS_4_1986.Case.Conversion.convert(s, to: .lower) == INCITS_4_1986.Case.Conversion.convert(o, to: .lower) else {
                 return false
             }
         }
@@ -233,7 +233,7 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
 
         var sourceIndex = source.startIndex
         for prefixByte in prefix {
-            guard INCITS_4_1986.CaseConversion.convert(source[sourceIndex], to: .lower) == INCITS_4_1986.CaseConversion.convert(prefixByte, to: .lower) else {
+            guard INCITS_4_1986.Case.Conversion.convert(source[sourceIndex], to: .lower) == INCITS_4_1986.Case.Conversion.convert(prefixByte, to: .lower) else {
                 return false
             }
             sourceIndex = source.index(after: sourceIndex)
@@ -298,13 +298,13 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
         while index < source.endIndex {
             let byte = source[index]
 
-            if byte == INCITS_4_1986.ControlCharacters.cr {
+            if byte == INCITS_4_1986.Character.Control.cr {
                 // End current line (excluding CR)
                 ranges.append(lineStart..<index)
 
                 // Check for CRLF
                 let next = source.index(after: index)
-                if next < source.endIndex && source[next] == INCITS_4_1986.ControlCharacters.lf {
+                if next < source.endIndex && source[next] == INCITS_4_1986.Character.Control.lf {
                     // CRLF - skip both
                     index = source.index(after: next)
                 } else {
@@ -312,7 +312,7 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
                     index = next
                 }
                 lineStart = index
-            } else if byte == INCITS_4_1986.ControlCharacters.lf {
+            } else if byte == INCITS_4_1986.Character.Control.lf {
                 // End current line (excluding LF)
                 ranges.append(lineStart..<index)
                 index = source.index(after: index)
@@ -515,7 +515,7 @@ extension INCITS_4_1986.ASCII where Source: StringProtocol {
     ///
     /// - ``INCITS_4_1986/LineEndingDetection/detect(_:)``
     @inlinable
-    public func detectedLineEnding() -> INCITS_4_1986.FormatEffectors.LineEnding? {
+    public func detectedLineEnding() -> INCITS_4_1986.FormatEffectors.Line.Ending? {
         INCITS_4_1986.LineEndingDetection.detect(source)
     }
 }
@@ -601,17 +601,17 @@ extension INCITS_4_1986.ASCII where Source: StringProtocol {
 extension INCITS_4_1986.ASCII where Source: StringProtocol {
     /// Line Feed character as a string
     public static var lf: Source {
-        Source(decoding: [INCITS_4_1986.ControlCharacters.lf], as: UTF8.self)
+        Source(decoding: [INCITS_4_1986.Character.Control.lf], as: UTF8.self)
     }
 
     /// Carriage Return character as a string
     public static var cr: Source {
-        Source(decoding: [INCITS_4_1986.ControlCharacters.cr], as: UTF8.self)
+        Source(decoding: [INCITS_4_1986.Character.Control.cr], as: UTF8.self)
     }
 
     /// CRLF sequence as a string
     public static var crlf: Source {
-        Source(decoding: INCITS_4_1986.ControlCharacters.crlf, as: UTF8.self)
+        Source(decoding: INCITS_4_1986.Character.Control.crlf, as: UTF8.self)
     }
 }
 

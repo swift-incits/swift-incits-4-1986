@@ -4,12 +4,8 @@
 // INCITS 4-1986 Section 4.3: Graphic Characters - Case Conversion
 // Delegates to ASCII.CaseConversion
 
-extension INCITS_4_1986 {
-    /// Case Conversion Operations
-    ///
-    /// Typealias to ``ASCII/CaseConversion``.
-    public typealias CaseConversion = ASCII_Primitives.ASCII.CaseConversion
-}
+// Case typealias is in INCITS_4_1986.swift
+// Case.Conversion accessible through it.
 
 extension INCITS_4_1986 {
     /// Converts ASCII letters in byte collection to specified case

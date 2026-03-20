@@ -7,5 +7,5 @@ extension INCITS_4_1986.FormatEffectors {
     /// Line ending style for ASCII text normalization
     ///
     /// Typealias to ``ASCII/LineEnding``.
-    public typealias LineEnding = ASCII_Primitives.ASCII.LineEnding
+    public typealias Line = ASCII_Primitives.ASCII.Line
 }

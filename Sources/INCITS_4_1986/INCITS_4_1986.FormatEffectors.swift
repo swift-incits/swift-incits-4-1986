@@ -37,12 +37,12 @@ extension INCITS_4_1986 {
     /// ```
     public static func normalized<C: Swift.Collection>(
         _ bytes: C,
-        to lineEnding: INCITS_4_1986.FormatEffectors.LineEnding
+        to lineEnding: INCITS_4_1986.FormatEffectors.Line.Ending
     ) -> [UInt8] where C.Element == UInt8 {
         // Fast path: if no line ending characters exist, return as-is
         // Single pass check is faster than two separate contains() calls
-        let cr = ASCII_Primitives.ASCII.ControlCharacters.cr
-        let lf = ASCII_Primitives.ASCII.ControlCharacters.lf
+        let cr = ASCII_Primitives.ASCII.Character.Control.cr
+        let lf = ASCII_Primitives.ASCII.Character.Control.lf
         if !bytes.contains(where: { $0 == cr || $0 == lf }) {
             return Array(bytes)
         }
