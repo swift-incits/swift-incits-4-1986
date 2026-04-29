@@ -1,0 +1,11 @@
+# .github/metadata.yaml
+# Triaged by AI-assisted bulk pass (2026-04-29).
+description: "Swift implementation of INCITS 4-1986: US-ASCII."
+topics:
+  - standards
+  - incits
+  - incits-4-1986
+  - ascii
+  - characters
+  - encoding
+homepage: "https://swift-institute.org"
