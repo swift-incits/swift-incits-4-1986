@@ -37,37 +37,38 @@ extension Set<Character>.ASCII {
     public static let whitespaces: Set<Character> = {
         var set = Set(
             INCITS_4_1986.whitespaces.map {
-                Character(UnicodeScalar($0))
+                Character(UnicodeScalar($0.underlying))
             })
-        set.insert(Character(.init([UInt8].ascii.crlf)))
+        set.insert(Character("\r\n"))
         return set
     }()
 
     /// Tests if a Character is ASCII whitespace (handles grapheme clusters)
     ///
-    /// Returns `true` if ALL Unicode scalars in the Character are ASCII whitespace bytes.
+    /// Returns `true` if ALL Unicode scalars in the Character are ASCII whitespace codes.
     /// This correctly handles Swift's grapheme clustering where `\r\n` (CRLF) is a single Character.
     ///
-    /// Per INCITS 4-1986, ASCII whitespace bytes are: SP (0x20), HT (0x09), LF (0x0A), CR (0x0D).
+    /// Per INCITS 4-1986, ASCII whitespace codes are: SP (0x20), HT (0x09), LF (0x0A), CR (0x0D).
     public static func isWhitespace(_ char: Character) -> Bool {
         char.unicodeScalars.allSatisfy { scalar in
-            scalar.value < 128 && INCITS_4_1986.whitespaces.contains(UInt8(scalar.value))
+            scalar.value < 128 && INCITS_4_1986.whitespaces.contains(ASCII_Primitives.ASCII.Code(UInt8(scalar.value)))
         }
     }
 }
 
-// MARK: - Set<UInt8>.ASCII
+// MARK: - Set<ASCII.Code>
 
-extension Set<UInt8>.ASCII {
-    /// ASCII whitespace characters as Set<UInt8>
+extension Set where Element == ASCII_Primitives.ASCII.Code {
+    /// ASCII whitespace characters as Set<ASCII.Code>
     ///
-    /// Derived from the canonical byte-level definition in `INCITS_4_1986.whitespaces`.
+    /// Derived from the canonical typed definition in `INCITS_4_1986.whitespaces`.
     /// Per INCITS 4-1986, these are the only four whitespace characters in US-ASCII:
     /// - U+0020 (SPACE)
     /// - U+0009 (HORIZONTAL TAB)
     /// - U+000A (LINE FEED)
     /// - U+000D (CARRIAGE RETURN)
-    public static let whitespaces: Set<UInt8> = Set(
-        INCITS_4_1986.whitespaces
-    )
+    ///
+    /// The `Element == ASCII.Code` constraint already encodes the ASCII domain,
+    /// so no nested `.ASCII` namespace is required (contrast `Set<Character>.ASCII`).
+    public static var whitespaces: Set<ASCII_Primitives.ASCII.Code> { INCITS_4_1986.whitespaces }
 }

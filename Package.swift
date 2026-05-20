@@ -38,6 +38,7 @@ let package = Package(
             name: "INCITS 4 1986",
             dependencies: [
                 .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
+                .product(name: "ASCII Primitives Standard Library Integration", package: "swift-ascii-primitives"),
                 .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
                 .product(name: "Binary Primitives", package: "swift-binary-primitives"),
                 .product(name: "Parser Primitives", package: "swift-parser-primitives"),

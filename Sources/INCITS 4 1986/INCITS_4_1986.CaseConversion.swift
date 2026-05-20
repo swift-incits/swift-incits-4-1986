@@ -8,15 +8,15 @@
 // Case.Conversion accessible through it.
 
 extension INCITS_4_1986 {
-    /// Converts ASCII letters in byte collection to specified case
+    /// Converts ASCII letters in code collection to specified case
     ///
     /// Delegates to ``ASCII/convert(_:to:)-5f76s``.
     @inlinable
     public static func convert<C: Swift.Collection>(
-        _ bytes: C,
+        _ codes: C,
         to case: INCITS_4_1986.Case
-    ) -> [UInt8] where C.Element == UInt8 {
-        ASCII_Primitives.ASCII.convert(bytes, to: `case`)
+    ) -> [ASCII_Primitives.ASCII.Code] where C.Element == ASCII_Primitives.ASCII.Code {
+        ASCII_Primitives.ASCII.convert(codes, to: `case`)
     }
 
     /// Converts ASCII letters in string to specified case

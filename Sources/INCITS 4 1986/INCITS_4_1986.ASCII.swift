@@ -4,6 +4,11 @@
 // Generic ASCII operations wrapper for bytes and strings
 
 import Standard_Library_Extensions
+public import ASCII_Primitives_Standard_Library_Integration
+
+// Note: `ASCII.Code` is shadowed by the wrapper `INCITS_4_1986.ASCII<Source>`
+// in same-module name resolution. All references in this file are fully
+// qualified as `ASCII_Primitives.ASCII.Code`.
 
 extension INCITS_4_1986 {
     /// Generic ASCII operations wrapper
@@ -45,167 +50,156 @@ extension INCITS_4_1986 {
     }
 }
 
-// MARK: - Byte Collection: Validation
+// MARK: - Code Collection: Validation
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 {
-    /// The wrapped byte collection (alias for source)
+extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+    /// The wrapped code collection (alias for source)
     @inlinable
     public var bytes: Source { source }
 
-    /// Returns true if all bytes are valid ASCII (0x00-0x7F)
+    /// Returns true if all codes are valid ASCII (0x00-0x7F)
     ///
-    /// Validates that every byte in the collection falls within the valid US-ASCII range.
-    /// Per INCITS 4-1986, valid ASCII bytes are 0x00-0x7F (0-127 decimal).
+    /// Trivially true: every `ASCII.Code` is by construction in 0x00-0x7F.
+    /// Kept for parity with the `StringProtocol` and `UInt8` overloads.
     ///
     /// ## Usage
     ///
     /// ```swift
-    /// [104, 101, 108, 108, 111].ascii.isAllASCII  // true ("hello")
-    /// [104, 255, 108].ascii.isAllASCII            // false (0xFF invalid)
+    /// [ASCII.Code.h, .e, .l, .l, .o].ascii.isAllASCII  // true
     /// ```
     @inlinable
     public var isAllASCII: Bool {
-        INCITS_4_1986.isAllASCII(source)
+        true
     }
 
-    /// Returns the bytes as an array if all are valid ASCII, nil otherwise
+    /// Returns the codes as an array (trivially valid).
     ///
-    /// Validates that all bytes are in the ASCII range (0x00-0x7F).
-    ///
-    /// ```swift
-    /// let valid: [UInt8] = [0x48, 0x69]
-    /// valid.ascii()  // Optional([0x48, 0x69])
-    ///
-    /// let invalid: [UInt8] = [0x48, 0xFF]
-    /// invalid.ascii()  // nil
-    /// ```
+    /// Provided for parity with the `StringProtocol` overload.
     @inlinable
-    public func callAsFunction() -> [UInt8]? {
-        isAllASCII ? Array(source) : nil
+    public func callAsFunction() -> [ASCII_Primitives.ASCII.Code]? {
+        Array(source)
     }
 }
 
-// MARK: - Byte Collection: Case Conversion
+// MARK: - Code Collection: Case Conversion
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 {
+extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
     /// Converts ASCII letters to specified case
     ///
-    /// Enables call syntax: `bytes.ascii(case: .upper)`
+    /// Enables call syntax: `codes.ascii(case: .upper)`
     ///
     /// - Parameter case: Target case (`.upper` or `.lower`)
-    /// - Returns: New byte array with ASCII letters converted
+    /// - Returns: New code array with ASCII letters converted
     @inlinable
-    public func callAsFunction(case: INCITS_4_1986.Case) -> [UInt8] {
+    public func callAsFunction(case: INCITS_4_1986.Case) -> [ASCII_Primitives.ASCII.Code] {
         INCITS_4_1986.convert(source, to: `case`)
     }
 
     /// Converts ASCII letters to uppercase
     ///
     /// Transforms all ASCII letters (a-z) to uppercase (A-Z),
-    /// leaving all other bytes unchanged.
+    /// leaving all other codes unchanged.
     ///
     /// ## Usage
     ///
     /// ```swift
-    /// let hello = [UInt8].ascii.unchecked("hello")
-    /// let upper = hello.ascii.uppercased()  // [72, 69, 76, 76, 79] ("HELLO")
+    /// let hello: [ASCII.Code] = [.h, .e, .l, .l, .o]
+    /// let upper = hello.ascii.uppercased()  // [.H, .E, .L, .L, .O]
     ///
     /// // Works efficiently with slices - no intermediate copy
-    /// let slice = bytes[start..<end]
+    /// let slice = codes[start..<end]
     /// let upperSlice = slice.ascii.uppercased()
     /// ```
     ///
-    /// - Returns: New byte array with ASCII letters converted to uppercase
+    /// - Returns: New code array with ASCII letters converted to uppercase
     @inlinable
-    public func uppercased() -> [UInt8] {
+    public func uppercased() -> [ASCII_Primitives.ASCII.Code] {
         INCITS_4_1986.convert(source, to: .upper)
     }
 
     /// Converts ASCII letters to lowercase
     ///
     /// Transforms all ASCII letters (A-Z) to lowercase (a-z),
-    /// leaving all other bytes unchanged.
+    /// leaving all other codes unchanged.
     ///
     /// ## Usage
     ///
     /// ```swift
-    /// let hello = [UInt8].ascii.unchecked("HELLO")
-    /// let lower = hello.ascii.lowercased()  // [104, 101, 108, 108, 111] ("hello")
+    /// let hello: [ASCII.Code] = [.H, .E, .L, .L, .O]
+    /// let lower = hello.ascii.lowercased()  // [.h, .e, .l, .l, .o]
     ///
     /// // Avoid String allocation for case-insensitive keys
-    /// let key = String(decoding: keyBytes.ascii.lowercased(), as: UTF8.self)
+    /// let key = String(decoding: keyCodes.ascii.lowercased().map(\.underlying), as: UTF8.self)
     /// ```
     ///
-    /// - Returns: New byte array with ASCII letters converted to lowercase
+    /// - Returns: New code array with ASCII letters converted to lowercase
     @inlinable
-    public func lowercased() -> [UInt8] {
+    public func lowercased() -> [ASCII_Primitives.ASCII.Code] {
         INCITS_4_1986.convert(source, to: .lower)
     }
 }
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 {
-    /// Trims ASCII bytes from both ends of the collection
+extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+    /// Trims ASCII codes from both ends of the collection
     ///
-    /// Removes leading and trailing bytes that match the given character set.
+    /// Removes leading and trailing codes that match the given character set.
     /// Returns a zero-copy SubSequence view of the original collection.
     ///
     /// ## Usage
     ///
     /// ```swift
-    /// let bytes: [UInt8] = [0x20, 0x48, 0x69, 0x20]  // " Hi "
-    /// let trimmed = bytes.ascii.trimming([0x20])  // [0x48, 0x69] ("Hi")
+    /// let codes: [ASCII.Code] = [.sp, .H, .i, .sp]  // " Hi "
+    /// let trimmed = codes.ascii.trimming([.sp])  // [.H, .i] ("Hi")
     ///
     /// // Trim LWSP (linear whitespace per RFC 822)
-    /// let whitespace: Set<UInt8> = [0x20, 0x09]  // SPACE, HTAB
-    /// let header = headerBytes.ascii.trimming(whitespace)
+    /// let whitespace: Set<ASCII.Code> = [.sp, .htab]  // SPACE, HTAB
+    /// let header = headerCodes.ascii.trimming(whitespace)
     /// ```
     ///
-    /// - Parameter characterSet: The set of ASCII byte values to trim
-    /// - Returns: A subsequence with the specified bytes trimmed from both ends
+    /// - Parameter characterSet: The set of ASCII codes to trim
+    /// - Returns: A subsequence with the specified codes trimmed from both ends
     @inlinable
-    public func trimming(_ characterSet: Set<UInt8>) -> Source.SubSequence {
+    public func trimming(_ characterSet: Set<ASCII_Primitives.ASCII.Code>) -> Source.SubSequence {
         source.trimming(characterSet)
     }
 }
 
-// MARK: - Byte Collection: Comparison
+// MARK: - Code Collection: Comparison
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 {
-    /// Compares two byte sequences for ASCII case-insensitive equality
+extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+    /// Compares two code sequences for ASCII case-insensitive equality
     ///
     /// Performs element-wise comparison using ASCII case-insensitive rules.
     /// Only ASCII letters (A-Z, a-z) are compared case-insensitively;
-    /// all other bytes must match exactly.
+    /// all other codes must match exactly.
     ///
     /// ## Performance
     ///
     /// This method is O(n) and performs **zero allocations**. Unlike `lowercased() == other`,
-    /// this compares bytes directly without creating intermediate arrays.
+    /// this compares codes directly without creating intermediate arrays.
     ///
     /// ## Example
     ///
     /// ```swift
-    /// let header = Array("Content-Type".utf8)
-    /// let lower = Array("content-type".utf8)
+    /// let header = "Content-Type".utf8.map(ASCII.Code.init)
+    /// let lower = "content-type".utf8.map(ASCII.Code.init)
     ///
     /// header.ascii.elementsEqualCaseInsensitive(lower)  // true
-    /// header.ascii.elementsEqualCaseInsensitive([UInt8]("CONTENT-TYPE".utf8))  // true
-    /// header.ascii.elementsEqualCaseInsensitive([UInt8]("Content-Length".utf8))  // false
     /// ```
     ///
-    /// - Parameter other: The byte sequence to compare against
+    /// - Parameter other: The code sequence to compare against
     /// - Returns: `true` if sequences are equal ignoring ASCII case, `false` otherwise
     @inlinable
     public func elementsEqualCaseInsensitive<Other: Collection>(
         _ other: Other
-    ) -> Bool where Other.Element == UInt8 {
+    ) -> Bool where Other.Element == ASCII_Primitives.ASCII.Code {
         guard source.count == other.count else { return false }
 
         var sourceIterator = source.makeIterator()
         var otherIterator = other.makeIterator()
 
         while let s = sourceIterator.next(), let o = otherIterator.next() {
-            // Use single-byte lowercased() - no allocation
+            // Use single-code lowercased() - no allocation
             guard INCITS_4_1986.Case.Conversion.convert(s, to: .lower) == INCITS_4_1986.Case.Conversion.convert(o, to: .lower) else {
                 return false
             }
@@ -219,8 +213,8 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
     /// ## Example
     ///
     /// ```swift
-    /// let header = Array("Content-Type: text/plain".utf8)
-    /// header.ascii.hasPrefix(caseInsensitive: Array("content-type".utf8))  // true
+    /// let header = "Content-Type: text/plain".utf8.map(ASCII.Code.init)
+    /// header.ascii.hasPrefix(caseInsensitive: "content-type".utf8.map(ASCII.Code.init))  // true
     /// ```
     ///
     /// - Parameter prefix: The prefix to check for
@@ -228,12 +222,12 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
     @inlinable
     public func hasPrefix<Prefix: Collection>(
         caseInsensitive prefix: Prefix
-    ) -> Bool where Prefix.Element == UInt8 {
+    ) -> Bool where Prefix.Element == ASCII_Primitives.ASCII.Code {
         guard source.count >= prefix.count else { return false }
 
         var sourceIndex = source.startIndex
-        for prefixByte in prefix {
-            guard INCITS_4_1986.Case.Conversion.convert(source[sourceIndex], to: .lower) == INCITS_4_1986.Case.Conversion.convert(prefixByte, to: .lower) else {
+        for prefixCode in prefix {
+            guard INCITS_4_1986.Case.Conversion.convert(source[sourceIndex], to: .lower) == INCITS_4_1986.Case.Conversion.convert(prefixCode, to: .lower) else {
                 return false
             }
             sourceIndex = source.index(after: sourceIndex)
@@ -243,19 +237,19 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
     }
 }
 
-// MARK: - Byte Collection: Line Operations
+// MARK: - Code Collection: Line Operations
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 {
-    /// A range representing a line within a byte collection
+extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+    /// A range representing a line within a code collection
     ///
     /// Contains the start and end indices of a line, excluding the line ending.
     public typealias LineRange = Range<Source.Index>
 
-    /// Returns index ranges for all lines in the byte collection (zero-copy)
+    /// Returns index ranges for all lines in the code collection (zero-copy)
     ///
     /// Splits the collection at ASCII line endings (CRLF, CR, or LF) and returns
     /// the index ranges of each line. This enables zero-copy access to lines
-    /// by using slices rather than copying bytes.
+    /// by using slices rather than copying codes.
     ///
     /// ## Performance
     ///
@@ -273,12 +267,12 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
     /// ## Example
     ///
     /// ```swift
-    /// let text = Array("Hello\r\nWorld\nFoo".utf8)
+    /// let text = "Hello\r\nWorld\nFoo".utf8.map(ASCII.Code.init)
     /// let ranges = text.ascii.lineRanges()
     ///
     /// for range in ranges {
     ///     let line = text[range]  // Zero-copy slice!
-    ///     print(String(decoding: line, as: UTF8.self))
+    ///     print(String(decoding: line.map(\.underlying), as: UTF8.self))
     /// }
     /// // Prints: "Hello", "World", "Foo"
     /// ```
@@ -296,15 +290,15 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
         var index = source.startIndex
 
         while index < source.endIndex {
-            let byte = source[index]
+            let code = source[index]
 
-            if byte == INCITS_4_1986.Character.Control.cr {
+            if code == ASCII_Primitives.ASCII.Code.cr {
                 // End current line (excluding CR)
                 ranges.append(lineStart..<index)
 
                 // Check for CRLF
                 let next = source.index(after: index)
-                if next < source.endIndex && source[next] == INCITS_4_1986.Character.Control.lf {
+                if next < source.endIndex && source[next] == ASCII_Primitives.ASCII.Code.lf {
                     // CRLF - skip both
                     index = source.index(after: next)
                 } else {
@@ -312,7 +306,7 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
                     index = next
                 }
                 lineStart = index
-            } else if byte == INCITS_4_1986.Character.Control.lf {
+            } else if code == ASCII_Primitives.ASCII.Code.lf {
                 // End current line (excluding LF)
                 ranges.append(lineStart..<index)
                 index = source.index(after: index)
@@ -330,67 +324,67 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
         return ranges
     }
 
-    /// Splits the byte collection into lines (allocating copies)
+    /// Splits the code collection into lines (allocating copies)
     ///
-    /// Convenience method that returns actual byte arrays for each line.
+    /// Convenience method that returns actual code arrays for each line.
     /// Use `lineRanges()` if you need zero-copy access.
     ///
     /// ## Example
     ///
     /// ```swift
-    /// let text = Array("Hello\r\nWorld".utf8)
-    /// let lines = text.ascii.lines()  // [[72, 101, 108, 108, 111], [87, 111, 114, 108, 100]]
+    /// let text = "Hello\r\nWorld".utf8.map(ASCII.Code.init)
+    /// let lines = text.ascii.lines()  // [[ASCII.Code], [ASCII.Code]]
     /// ```
     ///
-    /// - Returns: Array of byte arrays, one per line
+    /// - Returns: Array of code arrays, one per line
     @inlinable
-    public func lines() -> [[UInt8]] {
+    public func lines() -> [[ASCII_Primitives.ASCII.Code]] {
         lineRanges().map { Array(source[$0]) }
     }
 }
 
-// MARK: - Byte Collection: Predicates
+// MARK: - Code Collection: Predicates
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 {
-    /// Returns true if all bytes are ASCII whitespace characters
+extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+    /// Returns true if all codes are ASCII whitespace characters
     ///
-    /// Tests whether every byte is one of: SPACE (0x20), TAB (0x09), LF (0x0A), CR (0x0D).
+    /// Tests whether every code is one of: SPACE (0x20), TAB (0x09), LF (0x0A), CR (0x0D).
     @inlinable
     public var isAllWhitespace: Bool {
         ASCII.Classification.isAllWhitespace(source)
     }
 
-    /// Returns true if all bytes are ASCII digits (0-9)
+    /// Returns true if all codes are ASCII digits (0-9)
     @inlinable
     public var isAllDigits: Bool {
         ASCII.Classification.isAllDigits(source)
     }
 
-    /// Returns true if all bytes are ASCII letters (A-Z, a-z)
+    /// Returns true if all codes are ASCII letters (A-Z, a-z)
     @inlinable
     public var isAllLetters: Bool {
         ASCII.Classification.isAllLetters(source)
     }
 
-    /// Returns true if all bytes are ASCII alphanumeric (A-Z, a-z, 0-9)
+    /// Returns true if all codes are ASCII alphanumeric (A-Z, a-z, 0-9)
     @inlinable
     public var isAllAlphanumeric: Bool {
         ASCII.Classification.isAllAlphanumeric(source)
     }
 
-    /// Returns true if all bytes are ASCII control characters (0x00-0x1F or 0x7F)
+    /// Returns true if all codes are ASCII control characters (0x00-0x1F or 0x7F)
     @inlinable
     public var isAllControl: Bool {
         ASCII.Classification.isAllControl(source)
     }
 
-    /// Returns true if all bytes are ASCII visible characters (0x21-0x7E)
+    /// Returns true if all codes are ASCII visible characters (0x21-0x7E)
     @inlinable
     public var isAllVisible: Bool {
         ASCII.Classification.isAllVisible(source)
     }
 
-    /// Returns true if all bytes are ASCII printable characters (0x20-0x7E)
+    /// Returns true if all codes are ASCII printable characters (0x20-0x7E)
     @inlinable
     public var isAllPrintable: Bool {
         ASCII.Classification.isAllPrintable(source)
@@ -408,10 +402,13 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == UInt8 
         ASCII.Classification.isAllUppercase(source)
     }
 
-    /// Returns true if collection contains any non-ASCII bytes (>= 0x80)
+    /// Returns true if collection contains any non-ASCII codes (>= 0x80)
+    ///
+    /// Always returns false: every `ASCII.Code` is by construction < 0x80.
+    /// Kept for parity with the `StringProtocol` and `UInt8` overloads.
     @inlinable
     public var containsNonASCII: Bool {
-        ASCII.Classification.containsNonASCII(source)
+        false
     }
 
     /// Returns true if collection contains at least one hex digit (0-9, A-F, a-f)
