@@ -1,6 +1,6 @@
 # INCITS 4-1986
 
-[![CI](https://github.com/swift-standards/swift-incits-4-1986/workflows/CI/badge.svg)](https://github.com/swift-standards/swift-incits-4-1986/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-incits/swift-incits-4-1986/workflows/CI/badge.svg)](https://github.com/swift-incits/swift-incits-4-1986/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
 Swift implementation of INCITS 4-1986 (R2022): Coded Character Sets - 7-Bit American Standard Code for Information Interchange (US-ASCII).
@@ -32,7 +32,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-standards/swift-incits-4-1986.git", from: "0.1.0")
+    .package(url: "https://github.com/swift-incits/swift-incits-4-1986.git", from: "0.7.1")
 ]
 ```
 
