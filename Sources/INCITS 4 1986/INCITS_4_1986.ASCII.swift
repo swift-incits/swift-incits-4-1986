@@ -3,8 +3,8 @@
 //
 // Generic ASCII operations wrapper for bytes and strings
 
-import Standard_Library_Extensions
 public import ASCII_Primitives_Standard_Library_Integration
+import Standard_Library_Extensions
 
 // Note: `ASCII.Code` is shadowed by the wrapper `INCITS_4_1986.ASCII<Source>`
 // in same-module name resolution. All references in this file are fully
@@ -200,7 +200,10 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
 
         while let s = sourceIterator.next(), let o = otherIterator.next() {
             // Use single-code lowercased() - no allocation
-            guard INCITS_4_1986.Case.Conversion.convert(s, to: .lower) == INCITS_4_1986.Case.Conversion.convert(o, to: .lower) else {
+            guard
+                INCITS_4_1986.Case.Conversion.convert(s, to: .lower)
+                    == INCITS_4_1986.Case.Conversion.convert(o, to: .lower)
+            else {
                 return false
             }
         }
@@ -227,7 +230,10 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
 
         var sourceIndex = source.startIndex
         for prefixCode in prefix {
-            guard INCITS_4_1986.Case.Conversion.convert(source[sourceIndex], to: .lower) == INCITS_4_1986.Case.Conversion.convert(prefixCode, to: .lower) else {
+            guard
+                INCITS_4_1986.Case.Conversion.convert(source[sourceIndex], to: .lower)
+                    == INCITS_4_1986.Case.Conversion.convert(prefixCode, to: .lower)
+            else {
                 return false
             }
             sourceIndex = source.index(after: sourceIndex)

@@ -48,11 +48,12 @@ extension INCITS_4_1986 {
         }
 
         // Determine target line ending sequence inline
-        let target: [UInt8] = switch lineEnding {
-        case .lf: [lf]
-        case .cr: [cr]
-        case .crlf: [cr, lf]
-        }
+        let target: [UInt8] =
+            switch lineEnding {
+            case .lf: [lf]
+            case .cr: [cr]
+            case .crlf: [cr, lf]
+            }
 
         var result = [UInt8]()
         result.reserveCapacity(bytes.count + (lineEnding == .crlf ? bytes.count / 10 : 0))

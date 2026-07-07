@@ -3,8 +3,8 @@
 //
 // INCITS 4-1986: ASCII character sets on Set types
 
-import Standard_Library_Extensions
 import Binary_Primitives
+import Standard_Library_Extensions
 
 // MARK: - Set.ASCII Namespace
 
