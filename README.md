@@ -1,7 +1,7 @@
 # INCITS 4-1986
 
-[![CI](https://github.com/swift-incits/swift-incits-4-1986/workflows/CI/badge.svg)](https://github.com/swift-incits/swift-incits-4-1986/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+[![CI](https://github.com/swift-incits/swift-incits-4-1986/workflows/CI/badge.svg)](https://github.com/swift-incits/swift-incits-4-1986/actions/workflows/ci.yml)
 
 Swift implementation of INCITS 4-1986 (R2022): Coded Character Sets - 7-Bit American Standard Code for Information Interchange (US-ASCII).
 
