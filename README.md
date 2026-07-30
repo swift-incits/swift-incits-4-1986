@@ -24,7 +24,6 @@ Pure Swift implementation with no Foundation dependencies, suitable for Swift Em
 - Line ending normalization (LF, CR, CRLF) for cross-platform text processing
 - Bidirectional String ⟷ `[UInt8]` conversion with ASCII validation
 - Cross-module inlining via `@inlinable` and `@_transparent` for zero-cost abstractions
-- 513 tests covering edge cases, performance, and standards compliance
 
 ## Installation
 
@@ -523,36 +522,6 @@ Conforms to **INCITS 4-1986 (Reaffirmed 2022)**:
 - **Whitespace**: SPACE (0x20), HORIZONTAL TAB (0x09), LINE FEED (0x0A), CARRIAGE RETURN (0x0D)
 - **CRLF**: Required line ending for HTTP, SMTP, FTP, MIME per their RFCs
 - **Case conversion**: Offset of 0x20 between uppercase and lowercase letters
-
-## Testing
-
-Test suite: 513 tests in 164 suites
-
-Coverage:
-- Character classification for all 128 ASCII bytes
-- String and Substring character classification and validation
-- String and Substring case validation and conversion
-- String and Substring line ending detection
-- Case conversion (upper, lower, round-trip)
-- String ⟷ byte array conversion (valid, invalid, empty)
-- Line ending normalization (LF, CR, CRLF, mixed)
-- String trimming (whitespace, custom sets)
-- Edge cases (empty arrays, control characters, non-ASCII)
-- Performance benchmarks at multiple scales
-- Linear scaling validation
-
-Run tests:
-
-```bash
-swift test
-```
-
-Run specific test suites:
-
-```bash
-swift test --filter "Character Classification"
-swift test --filter "Linear Scaling"
-```
 
 ## Requirements
 
