@@ -47,7 +47,7 @@ extension INCITS_4_1986 {
             }
 
             @Test func `converting an empty string returns an empty string`() {
-                #expect(INCITS_4_1986.convert("", to: .upper) == "")
+                #expect(INCITS_4_1986.convert("", to: .upper).isEmpty)
             }
         }
 
