@@ -52,7 +52,8 @@ extension INCITS_4_1986 {
 
 // MARK: - Code Collection: Validation
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+extension INCITS_4_1986.ASCII
+where Source: Swift.Collection, Source.Element == ASCII_Primitives.ASCII.Code {
     /// The wrapped code collection (alias for source)
     @inlinable
     public var bytes: Source { source }
@@ -83,7 +84,8 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
 
 // MARK: - Code Collection: Case Conversion
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+extension INCITS_4_1986.ASCII
+where Source: Swift.Collection, Source.Element == ASCII_Primitives.ASCII.Code {
     /// Converts ASCII letters to specified case
     ///
     /// Enables call syntax: `codes.ascii(case: .upper)`
@@ -139,7 +141,8 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
     }
 }
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+extension INCITS_4_1986.ASCII
+where Source: Swift.Collection, Source.Element == ASCII_Primitives.ASCII.Code {
     /// Trims ASCII codes from both ends of the collection
     ///
     /// Removes leading and trailing codes that match the given character set.
@@ -166,7 +169,8 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
 
 // MARK: - Code Collection: Comparison
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+extension INCITS_4_1986.ASCII
+where Source: Swift.Collection, Source.Element == ASCII_Primitives.ASCII.Code {
     /// Compares two code sequences for ASCII case-insensitive equality
     ///
     /// Performs element-wise comparison using ASCII case-insensitive rules.
@@ -190,7 +194,7 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
     /// - Parameter other: The code sequence to compare against
     /// - Returns: `true` if sequences are equal ignoring ASCII case, `false` otherwise
     @inlinable
-    public func elementsEqualCaseInsensitive<Other: Collection>(
+    public func elementsEqualCaseInsensitive<Other: Swift.Collection>(
         _ other: Other
     ) -> Bool where Other.Element == ASCII_Primitives.ASCII.Code {
         guard source.count == other.count else { return false }
@@ -223,7 +227,7 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
     /// - Parameter prefix: The prefix to check for
     /// - Returns: `true` if collection starts with prefix (case-insensitive)
     @inlinable
-    public func hasPrefix<Prefix: Collection>(
+    public func hasPrefix<Prefix: Swift.Collection>(
         caseInsensitive prefix: Prefix
     ) -> Bool where Prefix.Element == ASCII_Primitives.ASCII.Code {
         guard source.count >= prefix.count else { return false }
@@ -245,7 +249,8 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
 
 // MARK: - Code Collection: Line Operations
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+extension INCITS_4_1986.ASCII
+where Source: Swift.Collection, Source.Element == ASCII_Primitives.ASCII.Code {
     /// A range representing a line within a code collection
     ///
     /// Contains the start and end indices of a line, excluding the line ending.
@@ -351,7 +356,8 @@ extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_
 
 // MARK: - Code Collection: Predicates
 
-extension INCITS_4_1986.ASCII where Source: Collection, Source.Element == ASCII_Primitives.ASCII.Code {
+extension INCITS_4_1986.ASCII
+where Source: Swift.Collection, Source.Element == ASCII_Primitives.ASCII.Code {
     /// Returns true if all codes are ASCII whitespace characters
     ///
     /// Tests whether every code is one of: SPACE (0x20), TAB (0x09), LF (0x0A), CR (0x0D).

@@ -57,6 +57,8 @@ extension INCITS_4_1986.LineEnding.Detection {
             let byte = bytes[i]
             if byte == INCITS_4_1986.Character.Control.cr {
                 // Check if this CR is part of CRLF
+                // swift-linter:disable:next count minus one
+                // REASON: plain `[UInt8]` lookahead bounds check; no typed Cardinal surface available for a raw byte array index.
                 if i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.Character.Control.lf {
                     return .crlf  // CRLF takes precedence
                 }
@@ -113,6 +115,8 @@ extension INCITS_4_1986.LineEnding.Detection {
 
             if byte == INCITS_4_1986.Character.Control.cr {
                 // Check if this CR is part of CRLF
+                // swift-linter:disable:next count minus one
+                // REASON: plain `[UInt8]` lookahead bounds check; no typed Cardinal surface available for a raw byte array index.
                 if i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.Character.Control.lf {
                     hasCRLF = true
                     i += 2  // Skip both CR and LF
