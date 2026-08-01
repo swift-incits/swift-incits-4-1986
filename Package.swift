@@ -44,6 +44,12 @@ let package = Package(
                 .product(name: "Parser Primitives", package: "swift-parser-primitives"),
             ]
         ),
+        .testTarget(
+            name: "INCITS 4 1986 Tests",
+            dependencies: [
+                "INCITS 4 1986"
+            ]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
