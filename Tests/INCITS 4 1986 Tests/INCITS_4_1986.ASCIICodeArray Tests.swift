@@ -36,7 +36,11 @@ import Testing
         }
 
         @Test func `static ascii unchecked decodes without validation`() {
-            #expect([ASCII_Primitives.ASCII.Code].ascii.unchecked("Hi") == [ASCII_Primitives.ASCII.Code](ascii: "Hi")!)
+            #expect(
+                [ASCII_Primitives.ASCII.Code].ascii.unchecked("Hi") == [
+                    ASCII_Primitives.ASCII.Code
+                ](ascii: "Hi")!
+            )
         }
 
         @Test func `static ascii crlf is CR followed by LF`() {
@@ -84,7 +88,8 @@ import Testing
             #expect(!Set<Character>.ascii.whitespaces.contains("a"))
         }
 
-        @Test func `isWhitespace recognizes the CRLF grapheme cluster as a single whitespace unit`() {
+        @Test func `isWhitespace recognizes the CRLF grapheme cluster as a single whitespace unit`()
+        {
             #expect(Set<Character>.ASCII.isWhitespace("\r\n"))
         }
 

@@ -46,7 +46,9 @@ extension INCITS_4_1986.LineEnding.Detection {
     /// - Parameter string: The string to analyze
     /// - Returns: The detected line ending type, or `nil` if none found
     @inlinable
-    public static func detect<S: StringProtocol>(_ string: S) -> INCITS_4_1986.FormatEffectors.Line.Ending? {
+    public static func detect<S: StringProtocol>(
+        _ string: S
+    ) -> INCITS_4_1986.FormatEffectors.Line.Ending? {
         // Byte-based detection for embedded Swift compatibility
         let bytes = Array(string.utf8)
         var hasCR = false

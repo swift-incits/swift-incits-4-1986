@@ -33,13 +33,23 @@ extension INCITS_4_1986.LineEnding.Detection {
             }
 
             @Test func `hasMixedLineEndings is false for a single consistent style`() {
-                #expect(!INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings("line1\nline2\nline3"))
-                #expect(!INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings("line1\r\nline2\r\nline3"))
+                #expect(
+                    !INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings("line1\nline2\nline3")
+                )
+                #expect(
+                    !INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings(
+                        "line1\r\nline2\r\nline3"
+                    )
+                )
             }
 
             @Test func `hasMixedLineEndings is true when multiple styles are present`() {
-                #expect(INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings("line1\nline2\r\nline3"))
-                #expect(INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings("line1\rline2\nline3"))
+                #expect(
+                    INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings("line1\nline2\r\nline3")
+                )
+                #expect(
+                    INCITS_4_1986.LineEnding.Detection.hasMixedLineEndings("line1\rline2\nline3")
+                )
             }
         }
 

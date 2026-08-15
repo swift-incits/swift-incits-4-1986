@@ -38,7 +38,8 @@ extension Set<Character>.ASCII {
         var set = Set(
             INCITS_4_1986.whitespaces.map {
                 Character(UnicodeScalar($0.underlying))
-            })
+            }
+        )
         set.insert(Character("\r\n"))
         return set
     }()
@@ -51,7 +52,10 @@ extension Set<Character>.ASCII {
     /// Per INCITS 4-1986, ASCII whitespace codes are: SP (0x20), HT (0x09), LF (0x0A), CR (0x0D).
     public static func isWhitespace(_ char: Character) -> Bool {
         char.unicodeScalars.allSatisfy { scalar in
-            scalar.value < 128 && INCITS_4_1986.whitespaces.contains(ASCII_Primitives.ASCII.Code(UInt8(scalar.value)))
+            scalar.value < 128
+                && INCITS_4_1986.whitespaces.contains(
+                    ASCII_Primitives.ASCII.Code(UInt8(scalar.value))
+                )
         }
     }
 }
