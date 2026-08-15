@@ -26,5 +26,7 @@ extension INCITS_4_1986 {
     /// Canonical definition of ASCII whitespace codes
     ///
     /// Delegates to ``ASCII/whitespaces``.
-    public static var whitespaces: Set<ASCII_Primitives.ASCII.Code> { ASCII_Primitives.ASCII.whitespaces }
+    public static var whitespaces: Set<ASCII_Primitives.ASCII.Code> {
+        ASCII_Primitives.ASCII.whitespaces
+    }
 }
