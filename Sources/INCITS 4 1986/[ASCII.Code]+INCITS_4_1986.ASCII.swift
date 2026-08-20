@@ -3,7 +3,7 @@
 //
 // Namespaced access to INCITS 4-1986 (US-ASCII) constants on [ASCII.Code]
 
-public import ASCII_Primitives_Standard_Library_Integration
+import ASCII_Primitives_Standard_Library_Integration
 import Standard_Library_Extensions
 
 // MARK: - [ASCII.Code] ASCII Namespace
