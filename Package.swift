@@ -1,4 +1,4 @@
-// swift-tools-version: 6.3.3
+// swift-tools-version: 6.4
 
 import PackageDescription
 
@@ -15,31 +15,49 @@ import PackageDescription
 let package = Package(
     name: "swift-incits-4-1986",
     platforms: [
-        .macOS("27"),
-        .iOS("27"),
-        .tvOS("27"),
-        .watchOS("27"),
-        .visionOS("27"),
+        .macOS(.v27),
+        .iOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
+        .visionOS(.v27),
     ],
     products: [
         .library(
             name: "INCITS 4 1986",
             targets: ["INCITS 4 1986"]
-        ),
+        )
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-primitives/swift-ascii-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-binary-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-parser-primitives.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-primitives/swift-parser-primitives.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
             name: "INCITS 4 1986",
             dependencies: [
                 .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
-                .product(name: "ASCII Primitives Standard Library Integration", package: "swift-ascii-primitives"),
-                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
+                .product(
+                    name: "ASCII Primitives Standard Library Integration",
+                    package: "swift-ascii-primitives"
+                ),
+                .product(
+                    name: "Standard Library Extensions",
+                    package: "swift-standard-library-extensions"
+                ),
                 .product(name: "Binary Primitives", package: "swift-binary-primitives"),
                 .product(name: "Parser Primitives", package: "swift-parser-primitives"),
             ]
