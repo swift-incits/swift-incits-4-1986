@@ -1,22 +1,7 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-incits-4-1986 open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-incits-4-1986 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import INCITS_4_1986
 
-// `INCITS_4_1986.ASCII<Source>` is a generic type; extending it directly with a
-// `@Suite` fails at compile time (`@section cannot be used in a generic context`,
-// see the testing skill's "Host types that break the extension pattern"). Use a
-// top-level backticked suite instead.
 @Suite struct `ASCII Wrapper Tests` {
     @Suite struct Unit {
         @Test func `code collection isAllASCII is trivially true`() {

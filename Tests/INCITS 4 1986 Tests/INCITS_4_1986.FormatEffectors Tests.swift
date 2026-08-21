@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-incits-4-1986 open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-incits-4-1986 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import INCITS_4_1986
@@ -17,17 +6,17 @@ extension INCITS_4_1986.FormatEffectors {
     @Suite struct `Format Effectors Tests` {
         @Suite struct Unit {
             @Test func `normalized converts LF to CRLF`() {
-                let bytes: [UInt8] = [0x6C, 0x0A, 0x6D]  // "l\nm"
+                let bytes: [UInt8] = [0x6C, 0x0A, 0x6D]
                 #expect(INCITS_4_1986.normalized(bytes, to: .crlf) == [0x6C, 0x0D, 0x0A, 0x6D])
             }
 
             @Test func `normalized converts CRLF to LF`() {
-                let bytes: [UInt8] = [0x6C, 0x0D, 0x0A, 0x6D]  // "l\r\nm"
+                let bytes: [UInt8] = [0x6C, 0x0D, 0x0A, 0x6D]
                 #expect(INCITS_4_1986.normalized(bytes, to: .lf) == [0x6C, 0x0A, 0x6D])
             }
 
             @Test func `normalized converts standalone CR to LF`() {
-                let bytes: [UInt8] = [0x6C, 0x0D, 0x6D]  // "l\rm"
+                let bytes: [UInt8] = [0x6C, 0x0D, 0x6D]
                 #expect(INCITS_4_1986.normalized(bytes, to: .lf) == [0x6C, 0x0A, 0x6D])
             }
 

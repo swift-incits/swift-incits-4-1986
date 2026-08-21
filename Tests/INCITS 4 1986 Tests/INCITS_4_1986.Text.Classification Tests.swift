@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-incits-4-1986 open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-incits-4-1986 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import INCITS_4_1986

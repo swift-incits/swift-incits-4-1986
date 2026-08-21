@@ -1,21 +1,6 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-incits-4-1986 open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-incits-4-1986 project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Testing
 
 @testable import INCITS_4_1986
-
-// `[ASCII_Primitives.ASCII.Code]` is a specialized generic (`Array<ASCII.Code>`), so
-// extending it directly with `@Suite` is not discoverable per the testing skill's
-// "Host types that break the extension pattern". Use top-level backticked suites.
 
 @Suite struct `ASCII Code Array Tests` {
     @Suite struct Unit {
@@ -105,7 +90,7 @@ import Testing
 
     @Suite struct `Edge Case` {
         @Test func `isWhitespace rejects a non-ASCII character even if it is Unicode whitespace`() {
-            #expect(!Set<Character>.ASCII.isWhitespace("\u{00A0}"))  // NO-BREAK SPACE
+            #expect(!Set<Character>.ASCII.isWhitespace("\u{00A0}"))
         }
     }
 
