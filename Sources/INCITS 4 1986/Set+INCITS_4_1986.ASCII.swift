@@ -1,4 +1,3 @@
-import Binary
 import Standard_Library_Extensions
 
 extension Set {

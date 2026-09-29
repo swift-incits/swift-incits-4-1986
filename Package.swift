@@ -18,20 +18,13 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-ascii.git",
             branch: "main"
         ),
         .package(
             url: "https://github.com/swift-atoms/swift-standard-library-extensions.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-binary.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-parser.git",
             branch: "main"
         ),
     ],
@@ -47,20 +40,15 @@ let package = Package(
                     name: "Standard Library Extensions",
                     package: "swift-standard-library-extensions"
                 ),
-                .product(
-                    name: "Binary",
-                    package: "swift-binary"
-                ),
-                .product(
-                    name: "Parser",
-                    package: "swift-parser"
-                ),
             ]
         ),
         .testTarget(
             name: "INCITS 4 1986 Tests",
             dependencies: [
-                "INCITS 4 1986"
+                .target(name: "INCITS 4 1986"),
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(name: "Byte", package: "swift-byte"),
+                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
             ]
         ),
     ],
