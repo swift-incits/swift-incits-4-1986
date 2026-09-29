@@ -128,7 +128,7 @@ struct `StringProtocol exposes INCITS views and core ASCII conversions` {
         @Test
         func `ASCII initialization returns nil for non-ASCII bytes`() {
 
-            let bytes: [Byte] = [0x48, 0x65, 0xFF, 0x6C, 0x6F]
+            let bytes: [Byte] = [Byte(0x48), Byte(0x65), Byte(0xFF), Byte(0x6C), Byte(0x6F)]
             #expect(String(ascii: bytes) == nil)
         }
 

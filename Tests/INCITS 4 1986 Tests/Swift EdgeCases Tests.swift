@@ -20,7 +20,7 @@ struct `ASCII operations respect character boundaries and empty inputs` {
 
         @Test
         func `Boundary at 0x80 is invalid ASCII`() {
-            #expect(!isAllASCII([0x80]))
+            #expect(!isAllASCII([Byte(0x80)]))
         }
 
         @Test
@@ -186,19 +186,19 @@ struct `ASCII operations respect character boundaries and empty inputs` {
 
         @Test
         func `Non-ASCII at start fails immediately`() {
-            let bytes: [Byte] = [0x80, ASCII::ASCII.Code.A.byte, ASCII::ASCII.Code.B.byte, ASCII::ASCII.Code.C.byte]
+            let bytes: [Byte] = [Byte(0x80), ASCII::ASCII.Code.A.byte, ASCII::ASCII.Code.B.byte, ASCII::ASCII.Code.C.byte]
             #expect(!isAllASCII(bytes))
         }
 
         @Test
         func `Validation detects a nonASCII byte at the end`() {
-            let bytes: [Byte] = [ASCII::ASCII.Code.A.byte, ASCII::ASCII.Code.B.byte, ASCII::ASCII.Code.C.byte, 0x80]
+            let bytes: [Byte] = [ASCII::ASCII.Code.A.byte, ASCII::ASCII.Code.B.byte, ASCII::ASCII.Code.C.byte, Byte(0x80)]
             #expect(!isAllASCII(bytes))
         }
 
         @Test
         func `Validation detects a nonASCII byte in the middle`() {
-            let bytes: [Byte] = [ASCII::ASCII.Code.A.byte, 0x80, ASCII::ASCII.Code.B.byte]
+            let bytes: [Byte] = [ASCII::ASCII.Code.A.byte, Byte(0x80), ASCII::ASCII.Code.B.byte]
             #expect(!isAllASCII(bytes))
         }
 

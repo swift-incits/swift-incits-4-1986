@@ -155,9 +155,9 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         func `UTF8 sequences containing nonASCII bytes are rejected`() {
 
             let multiByteSequences: [[Byte]] = [
-                [0xC3, 0xA9],
-                [0xE2, 0x82, 0xAC],
-                [0xF0, 0x9F, 0x98, 0x80],
+                [Byte(0xC3), Byte(0xA9)],
+                [Byte(0xE2), Byte(0x82), Byte(0xAC)],
+                [Byte(0xF0), Byte(0x9F), Byte(0x98), Byte(0x80)],
             ]
 
             for seq in multiByteSequences {
@@ -171,7 +171,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         @Test
         func `Bytes used in UTF16 surrogate encodings are rejected`() {
 
-            let surrogateRangeBytes: [Byte] = [0xD8, 0xDC, 0xDF, 0xED]
+            let surrogateRangeBytes: [Byte] = [Byte(0xD8), Byte(0xDC), Byte(0xDF), Byte(0xED)]
 
             for byte in surrogateRangeBytes {
                 #expect(
@@ -235,7 +235,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
             var invalidASCII = validASCII
             if size > 0 {
-                invalidASCII[size - 1] = 0x80
+                invalidASCII[size - 1] = Byte(0x80)
                 #expect(
                     !isAllASCII(invalidASCII),
                     "Invalid ASCII array of size \(size) should fail"
@@ -252,7 +252,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         @Test
         func `Validation rejects a nonASCII byte at the end of a million byte buffer`() {
             var massive: [Byte] = Array(repeating: ASCII::ASCII.Code.A.byte, count: 1_000_000)
-            massive[999_999] = 0x80
+            massive[999_999] = Byte(0x80)
             #expect(!isAllASCII(massive), "Should detect non-ASCII at end of massive array")
         }
 
@@ -468,7 +468,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
             let size = 100
             for position in 0..<size {
                 var bytes: [Byte] = Array(repeating: ASCII::ASCII.Code.A.byte, count: size)
-                bytes[position] = 0x80
+                bytes[position] = Byte(0x80)
                 #expect(!isAllASCII(bytes), "Should detect non-ASCII at position \(position)")
             }
         }

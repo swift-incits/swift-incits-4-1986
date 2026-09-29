@@ -15,10 +15,10 @@ struct `Byte and code arrays expose ASCII operations` {
     struct `Arrays validate convert and classify ASCII values` {
         @Test
         func `Byte array has validation method`() {
-            let ascii: [Byte] = [0x48, 0x65, 0x6C, 0x6C, 0x6F]
+            let ascii: [Byte] = [Byte(0x48), Byte(0x65), Byte(0x6C), Byte(0x6C), Byte(0x6F)]
             #expect(isAllASCII(ascii))
 
-            let nonAscii: [Byte] = [0x48, 0xFF]
+            let nonAscii: [Byte] = [Byte(0x48), Byte(0xFF)]
             #expect(!isAllASCII(nonAscii))
         }
 

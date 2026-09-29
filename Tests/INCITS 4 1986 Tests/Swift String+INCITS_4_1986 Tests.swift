@@ -454,30 +454,30 @@ struct `Strings expose the INCITS ASCII view` {
     @Suite
     struct `String views identify the preferred line ending style` {
         @Test(arguments: [
-            ("line1\nline2", INCITS_4_1986.FormatEffectors.Line.Ending.lf),
-            ("line1\n", .lf),
-            ("\n", .lf),
+            "line1\nline2",
+            "line1\n",
+            "\n",
         ])
-        func `Line ending detection detects LF`(str: String, expected: INCITS_4_1986.FormatEffectors.Line.Ending) {
-            #expect(str.ascii.detectedLineEnding() == expected)
+        func `Line ending detection detects LF`(str: String) {
+            #expect(str.ascii.detectedLineEnding() == .lf)
         }
 
         @Test(arguments: [
-            ("line1\rline2", INCITS_4_1986.FormatEffectors.Line.Ending.cr),
-            ("line1\r", .cr),
-            ("\r", .cr),
+            "line1\rline2",
+            "line1\r",
+            "\r",
         ])
-        func `Line ending detection detects CR`(str: String, expected: INCITS_4_1986.FormatEffectors.Line.Ending) {
-            #expect(str.ascii.detectedLineEnding() == expected)
+        func `Line ending detection detects CR`(str: String) {
+            #expect(str.ascii.detectedLineEnding() == .cr)
         }
 
         @Test(arguments: [
-            ("line1\r\nline2", INCITS_4_1986.FormatEffectors.Line.Ending.crlf),
-            ("line1\r\n", .crlf),
-            ("\r\n", .crlf),
+            "line1\r\nline2",
+            "line1\r\n",
+            "\r\n",
         ])
-        func `Line ending detection detects CRLF`(str: String, expected: INCITS_4_1986.FormatEffectors.Line.Ending) {
-            #expect(str.ascii.detectedLineEnding() == expected)
+        func `Line ending detection detects CRLF`(str: String) {
+            #expect(str.ascii.detectedLineEnding() == .crlf)
         }
 
         @Test

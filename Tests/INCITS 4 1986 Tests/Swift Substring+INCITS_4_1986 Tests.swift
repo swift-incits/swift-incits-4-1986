@@ -518,33 +518,33 @@ struct `Substrings expose the INCITS ASCII view` {
     @Suite
     struct `Substring views identify the preferred line ending style` {
         @Test(arguments: [
-            ("line1\nline2", INCITS_4_1986.FormatEffectors.Line.Ending.lf),
-            ("line1\n", INCITS_4_1986.FormatEffectors.Line.Ending.lf),
-            ("\n", INCITS_4_1986.FormatEffectors.Line.Ending.lf),
+            "line1\nline2",
+            "line1\n",
+            "\n",
         ])
-        func `Line ending detection detects LF`(str: String, expected: INCITS_4_1986.FormatEffectors.Line.Ending) {
+        func `Line ending detection detects LF`(str: String) {
             let sub = str[...]
-            #expect(sub.ascii.detectedLineEnding() == expected)
+            #expect(sub.ascii.detectedLineEnding() == .lf)
         }
 
         @Test(arguments: [
-            ("line1\rline2", INCITS_4_1986.FormatEffectors.Line.Ending.cr),
-            ("line1\r", INCITS_4_1986.FormatEffectors.Line.Ending.cr),
-            ("\r", INCITS_4_1986.FormatEffectors.Line.Ending.cr),
+            "line1\rline2",
+            "line1\r",
+            "\r",
         ])
-        func `Line ending detection detects CR`(str: String, expected: INCITS_4_1986.FormatEffectors.Line.Ending) {
+        func `Line ending detection detects CR`(str: String) {
             let sub = str[...]
-            #expect(sub.ascii.detectedLineEnding() == expected)
+            #expect(sub.ascii.detectedLineEnding() == .cr)
         }
 
         @Test(arguments: [
-            ("line1\r\nline2", INCITS_4_1986.FormatEffectors.Line.Ending.crlf),
-            ("line1\r\n", INCITS_4_1986.FormatEffectors.Line.Ending.crlf),
-            ("\r\n", INCITS_4_1986.FormatEffectors.Line.Ending.crlf),
+            "line1\r\nline2",
+            "line1\r\n",
+            "\r\n",
         ])
-        func `Line ending detection detects CRLF`(str: String, expected: INCITS_4_1986.FormatEffectors.Line.Ending) {
+        func `Line ending detection detects CRLF`(str: String) {
             let sub = str[...]
-            #expect(sub.ascii.detectedLineEnding() == expected)
+            #expect(sub.ascii.detectedLineEnding() == .crlf)
         }
 
         @Test
