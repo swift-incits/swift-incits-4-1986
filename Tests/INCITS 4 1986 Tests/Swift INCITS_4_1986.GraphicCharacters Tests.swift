@@ -19,7 +19,7 @@ struct `ASCII exposes the specified graphic character constants` {
         @Test(arguments: Array(0...9))
         func `Digit constants have the specified ASCII values`(digit: Int) {
             let char = Character("\(digit)")
-            let byte = UInt8(ascii: char)!
+            let byte = char.asciiValue!
             #expect(byte == 0x30 + UInt8(digit))
         }
     }
@@ -40,7 +40,7 @@ struct `ASCII exposes the specified graphic character constants` {
 
         @Test(arguments: Array(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", ASCII::ASCII.Code.A.underlying...ASCII::ASCII.Code.Z.underlying)))
         func `Every uppercase letter has the specified ASCII byte`(char: Character, expected: UInt8) {
-            let byte = UInt8(ascii: char)!
+            let byte = char.asciiValue!
             #expect(
                 byte == expected,
                 "Character '\(char)' should have value 0x\(String(expected, radix: 16))"
@@ -49,7 +49,7 @@ struct `ASCII exposes the specified graphic character constants` {
 
         @Test(arguments: Array(zip("abcdefghijklmnopqrstuvwxyz", ASCII::ASCII.Code.a.underlying...ASCII::ASCII.Code.z.underlying)))
         func `Every lowercase letter has the specified ASCII byte`(char: Character, expected: UInt8) {
-            let byte = UInt8(ascii: char)!
+            let byte = char.asciiValue!
             #expect(
                 byte == expected,
                 "Character '\(char)' should have value 0x\(String(expected, radix: 16))"

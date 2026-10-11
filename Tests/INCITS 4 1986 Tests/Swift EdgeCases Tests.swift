@@ -35,40 +35,40 @@ struct `ASCII operations respect character boundaries and empty inputs` {
 
             let extendedASCII: UInt8 = 0x80
             #expect(!isAllASCII([Byte(bitPattern: extendedASCII)]))
-            #expect(!extendedASCII.ascii.isControl)
-            #expect(!extendedASCII.ascii.isPrintable)
+            #expect(!ASCII.Code(extendedASCII).isControl)
+            #expect(!ASCII.Code(extendedASCII).isPrintable)
         }
 
         @Test
         func `Letter boundaries are precise`() {
 
-            #expect((ASCII::ASCII.Code.A.underlying - 1).ascii.isLetter == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.A.underlying - 1).isLetter == false)
             #expect(ASCII::ASCII.Code.A.isLetter == true)
             #expect(ASCII::ASCII.Code.Z.isLetter == true)
-            #expect((ASCII::ASCII.Code.Z.underlying + 1).ascii.isLetter == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.Z.underlying + 1).isLetter == false)
 
-            #expect((ASCII::ASCII.Code.a.underlying - 1).ascii.isLetter == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.a.underlying - 1).isLetter == false)
             #expect(ASCII::ASCII.Code.a.isLetter == true)
             #expect(ASCII::ASCII.Code.z.isLetter == true)
-            #expect((ASCII::ASCII.Code.z.underlying + 1).ascii.isLetter == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.z.underlying + 1).isLetter == false)
         }
 
         @Test
         func `Digit boundaries are precise`() {
 
-            #expect((ASCII::ASCII.Code.`0`.underlying - 1).ascii.isDigit == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.`0`.underlying - 1).isDigit == false)
             #expect(ASCII::ASCII.Code.`0`.isDigit == true)
             #expect(ASCII::ASCII.Code.`9`.isDigit == true)
-            #expect((ASCII::ASCII.Code.`9`.underlying + 1).ascii.isDigit == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.`9`.underlying + 1).isDigit == false)
         }
 
         @Test
         func `Printable boundaries are precise`() {
 
-            #expect((ASCII::ASCII.Code.sp.underlying - 1).ascii.isPrintable == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.sp.underlying - 1).isPrintable == false)
             #expect(ASCII::ASCII.Code.sp.isPrintable == true)
             #expect(ASCII::ASCII.Code.tilde.isPrintable == true)
-            #expect((ASCII::ASCII.Code.tilde.underlying + 1).ascii.isPrintable == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.tilde.underlying + 1).isPrintable == false)
         }
 
         @Test
@@ -77,7 +77,7 @@ struct `ASCII operations respect character boundaries and empty inputs` {
             #expect(ASCII::ASCII.Code.sp.isVisible == false)
             #expect(ASCII::ASCII.Code.exclamationPoint.isVisible == true)
             #expect(ASCII::ASCII.Code.tilde.isVisible == true)
-            #expect((ASCII::ASCII.Code.tilde.underlying + 1).ascii.isVisible == false)
+            #expect(ASCII.Code(ASCII::ASCII.Code.tilde.underlying + 1).isVisible == false)
         }
     }
 
@@ -226,24 +226,24 @@ struct `ASCII operations respect character boundaries and empty inputs` {
     struct `Character conversion accepts ASCII and rejects other characters` {
         @Test
         func `Non-ASCII character returns nil`() {
-            #expect(UInt8(ascii: "é") == nil)
-            #expect(UInt8(ascii: "ñ") == nil)
-            #expect(UInt8(ascii: "ü") == nil)
+            #expect(Character("é").asciiValue == nil)
+            #expect(Character("ñ").asciiValue == nil)
+            #expect(Character("ü").asciiValue == nil)
         }
 
         @Test
         func `Emoji returns nil`() {
-            #expect(UInt8(ascii: "😀") == nil)
-            #expect(UInt8(ascii: "🎉") == nil)
-            #expect(UInt8(ascii: "❤️") == nil)
+            #expect(Character("😀").asciiValue == nil)
+            #expect(Character("🎉").asciiValue == nil)
+            #expect(Character("❤️").asciiValue == nil)
         }
 
         @Test
         func `CJK characters return nil`() {
-            #expect(UInt8(ascii: "中") == nil)
-            #expect(UInt8(ascii: "文") == nil)
-            #expect(UInt8(ascii: "日") == nil)
-            #expect(UInt8(ascii: "本") == nil)
+            #expect(Character("中").asciiValue == nil)
+            #expect(Character("文").asciiValue == nil)
+            #expect(Character("日").asciiValue == nil)
+            #expect(Character("本").asciiValue == nil)
         }
 
         @Test
@@ -259,7 +259,7 @@ struct `ASCII operations respect character boundaries and empty inputs` {
             for byte in ASCII::ASCII.Code.nul.underlying...ASCII::ASCII.Code.del.underlying {
                 let scalar = UnicodeScalar(byte)
                 let char = Character(scalar)
-                if let converted = UInt8(ascii: char) {
+                if let converted = char.asciiValue {
                     #expect(converted == byte, "Byte 0x\(String(byte, radix: 16)) failed roundtrip")
                 }
             }

@@ -98,7 +98,7 @@ struct `ASCII exposes the specified control character constants` {
                 ASCII::ASCII.Code.cr.underlying, ASCII::ASCII.Code.esc.underlying, ASCII::ASCII.Code.del.underlying,
             ]
             for byte in controlChars {
-                #expect(byte.ascii.isControl, "0x\(String(byte, radix: 16)) should be control")
+                #expect(ASCII.Code(byte).isControl, "0x\(String(byte, radix: 16)) should be control")
             }
         }
 

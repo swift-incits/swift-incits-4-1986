@@ -22,21 +22,21 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
                 "Byte 0x\(String(byte, radix: 16)) classification inconsistent"
             )
 
-            if byte.ascii.isControl {
+            if ASCII.Code(byte).isControl {
 
                 #expect(
-                    !byte.ascii.isLetter,
+                    !ASCII.Code(byte).isLetter,
                     "Control byte 0x\(String(byte, radix: 16)) cannot be letter"
                 )
                 #expect(
-                    !byte.ascii.isDigit,
+                    !ASCII.Code(byte).isDigit,
                     "Control byte 0x\(String(byte, radix: 16)) cannot be digit"
                 )
             }
 
-            if byte.ascii.isVisible {
+            if ASCII.Code(byte).isVisible {
                 #expect(
-                    byte.ascii.isPrintable,
+                    ASCII.Code(byte).isPrintable,
                     "Visible byte 0x\(String(byte, radix: 16)) must be printable"
                 )
             }
@@ -44,15 +44,15 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test(arguments: Array(UInt8(0)...UInt8(255)))
         func `Case conversion is idempotent for every byte`(byte: UInt8) {
-            let upper = byte.ascii(case: .upper)
-            let upperAgain = upper.ascii(case: .upper)
+            let upper = ASCII.Code(byte)(case: .upper)
+            let upperAgain = ASCII.Code(upper)(case: .upper)
             #expect(
                 upper == upperAgain,
                 "Uppercase idempotence failed for 0x\(String(byte, radix: 16))"
             )
 
-            let lower = byte.ascii(case: .lower)
-            let lowerAgain = lower.ascii(case: .lower)
+            let lower = ASCII.Code(byte)(case: .lower)
+            let lowerAgain = ASCII.Code(lower)(case: .lower)
             #expect(
                 lower == lowerAgain,
                 "Lowercase idempotence failed for 0x\(String(byte, radix: 16))"
@@ -62,10 +62,10 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         @Test(arguments: Array(UInt8(0)...UInt8(255)))
         func `Case conversion cycles preserve the requested case for every byte`(byte: UInt8) {
 
-            if byte.ascii.isLetter {
-                let cycle = byte.ascii(case: .upper).ascii(case: .lower).ascii(case: .upper)
+            if ASCII.Code(byte).isLetter {
+                let cycle = ASCII.Code(ASCII.Code(ASCII.Code(byte)(case: .upper))(case: .lower))(case: .upper)
                 #expect(
-                    cycle == byte.ascii(case: .upper),
+                    cycle == ASCII.Code(byte)(case: .upper),
                     "Case involution failed for 0x\(String(byte, radix: 16))"
                 )
             }
@@ -76,8 +76,8 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
     struct `ASCII predicates agree across the complete character set` {
         @Test(arguments: Array(UInt8(0)...UInt8(127)))
         func `Control and printable are mutually exclusive`(byte: UInt8) {
-            let isControl = byte.ascii.isControl
-            let isPrintable = byte.ascii.isPrintable
+            let isControl = ASCII.Code(byte).isControl
+            let isPrintable = ASCII.Code(byte).isPrintable
 
             if byte == ASCII::ASCII.Code.sp.underlying {
                 #expect(!isControl && isPrintable)
@@ -96,8 +96,8 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test(arguments: Array(UInt8(0)...UInt8(127)))
         func `Every ASCII byte is either control or printable`(byte: UInt8) {
-            let isControl = byte.ascii.isControl
-            let isPrintable = byte.ascii.isPrintable
+            let isControl = ASCII.Code(byte).isControl
+            let isPrintable = ASCII.Code(byte).isPrintable
 
             #expect(
                 isControl != isPrintable,
@@ -107,9 +107,9 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test(arguments: Array(UInt8(0)...UInt8(127)))
         func `Letter implies alphanumeric`(byte: UInt8) {
-            if byte.ascii.isLetter {
+            if ASCII.Code(byte).isLetter {
                 #expect(
-                    byte.ascii.isAlphanumeric,
+                    ASCII.Code(byte).isAlphanumeric,
                     "Letter 0x\(String(byte, radix: 16)) must be alphanumeric"
                 )
             }
@@ -117,9 +117,9 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test(arguments: Array(UInt8(0)...UInt8(127)))
         func `Digit implies alphanumeric`(byte: UInt8) {
-            if byte.ascii.isDigit {
+            if ASCII.Code(byte).isDigit {
                 #expect(
-                    byte.ascii.isAlphanumeric,
+                    ASCII.Code(byte).isAlphanumeric,
                     "Digit 0x\(String(byte, radix: 16)) must be alphanumeric"
                 )
             }
@@ -127,15 +127,15 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test(arguments: Array(UInt8(0)...UInt8(127)))
         func `Uppercase and lowercase are mutually exclusive`(byte: UInt8) {
-            let isUpper = byte.ascii.isUppercase
-            let isLower = byte.ascii.isLowercase
+            let isUpper = ASCII.Code(byte).isUppercase
+            let isLower = ASCII.Code(byte).isLowercase
 
             #expect(
                 !(isUpper && isLower),
                 "Byte 0x\(String(byte, radix: 16)) cannot be both upper and lower"
             )
 
-            if byte.ascii.isLetter {
+            if ASCII.Code(byte).isLetter {
                 #expect(
                     isUpper != isLower,
                     "Letter 0x\(String(byte, radix: 16)) must be exactly one of upper or lower"
@@ -186,19 +186,19 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
             let cyrillicA = "а"
             #expect(
-                UInt8(ascii: Character(cyrillicA)) == nil,
+                Character(cyrillicA).asciiValue == nil,
                 "Cyrillic 'а' should not convert to ASCII"
             )
 
             let greekA = "Α"
-            #expect(UInt8(ascii: Character(greekA)) == nil, "Greek 'Α' should not convert to ASCII")
+            #expect(Character(greekA).asciiValue == nil, "Greek 'Α' should not convert to ASCII")
         }
 
         @Test
         func `Zero width characters are rejected`() {
             let zeroWidth = "\u{200B}"
             #expect(
-                UInt8(ascii: Character(zeroWidth)) == nil,
+                Character(zeroWidth).asciiValue == nil,
                 "Zero-width space should be rejected"
             )
         }
@@ -208,7 +208,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
             let combining = "\u{0301}"
             #expect(
-                UInt8(ascii: Character(combining)) == nil,
+                Character(combining).asciiValue == nil,
                 "Combining character should be rejected"
             )
         }
@@ -217,10 +217,10 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         func `Unicode whitespace outside ASCII is rejected`() {
 
             let nbsp = "\u{00A0}"
-            #expect(UInt8(ascii: Character(nbsp)) == nil, "Non-breaking space should be rejected")
+            #expect(Character(nbsp).asciiValue == nil, "Non-breaking space should be rejected")
 
             let emSpace = "\u{2003}"
-            #expect(UInt8(ascii: Character(emSpace)) == nil, "Em space should be rejected")
+            #expect(Character(emSpace).asciiValue == nil, "Em space should be rejected")
         }
     }
 
@@ -387,14 +387,14 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         @Test
         func `Case conversion preserves every byte outside the letter ranges`() {
 
-            let nonLetters = Array(UInt8(0)...UInt8(127)).filter { !$0.ascii.isLetter }
+            let nonLetters = Array(UInt8(0)...UInt8(127)).filter { !ASCII.Code($0).isLetter }
             for byte in nonLetters {
                 #expect(
-                    byte.ascii(case: .upper) == byte,
+                    ASCII.Code(byte)(case: .upper) == byte,
                     "Non-letter 0x\(String(byte, radix: 16)) should be unchanged by uppercase"
                 )
                 #expect(
-                    byte.ascii(case: .lower) == byte,
+                    ASCII.Code(byte)(case: .lower) == byte,
                     "Non-letter 0x\(String(byte, radix: 16)) should be unchanged by lowercase"
                 )
             }
@@ -404,14 +404,14 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         func `Case conversion cycles preserve every ASCII letter`() {
 
             for byte in ASCII::ASCII.Code.A.underlying...ASCII::ASCII.Code.Z.underlying {
-                let lower = byte.ascii(case: .lower)
-                let backToUpper = lower.ascii(case: .upper)
+                let lower = ASCII.Code(byte)(case: .lower)
+                let backToUpper = ASCII.Code(lower)(case: .upper)
                 #expect(backToUpper == byte, "Round-trip failed for 0x\(String(byte, radix: 16))")
             }
 
             for byte in ASCII::ASCII.Code.a.underlying...ASCII::ASCII.Code.z.underlying {
-                let upper = byte.ascii(case: .upper)
-                let backToLower = upper.ascii(case: .lower)
+                let upper = ASCII.Code(byte)(case: .upper)
+                let backToLower = ASCII.Code(upper)(case: .lower)
                 #expect(backToLower == byte, "Round-trip failed for 0x\(String(byte, radix: 16))")
             }
         }

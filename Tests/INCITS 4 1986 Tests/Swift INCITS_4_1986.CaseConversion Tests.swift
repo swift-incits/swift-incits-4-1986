@@ -55,9 +55,9 @@ struct `Case conversion maps ASCII letters to the requested case` {
             ("m", "M"), ("n", "N"),
         ])
         func `Lowercase bytes convert to uppercase`(lower: Character, upper: Character) {
-            let lowerByte = UInt8(ascii: lower)!
-            let upperByte = UInt8(ascii: upper)!
-            #expect(lowerByte.ascii(case: .upper) == upperByte)
+            let lowerByte = lower.asciiValue!
+            let upperByte = upper.asciiValue!
+            #expect(ASCII.Code(lowerByte)(case: .upper) == upperByte)
         }
 
         @Test(arguments: [
@@ -65,16 +65,16 @@ struct `Case conversion maps ASCII letters to the requested case` {
             ("M", "m"), ("N", "n"),
         ])
         func `Uppercase bytes convert to lowercase`(upper: Character, lower: Character) {
-            let upperByte = UInt8(ascii: upper)!
-            let lowerByte = UInt8(ascii: lower)!
-            #expect(upperByte.ascii(case: .lower) == lowerByte)
+            let upperByte = upper.asciiValue!
+            let lowerByte = lower.asciiValue!
+            #expect(ASCII.Code(upperByte)(case: .lower) == lowerByte)
         }
 
         @Test(arguments: ["0", "1", "9", "!", "@", " "])
         func `Case conversion preserves bytes outside the letter ranges`(char: Character) {
-            let byte = UInt8(ascii: char)!
-            #expect(byte.ascii(case: .upper) == byte)
-            #expect(byte.ascii(case: .lower) == byte)
+            let byte = char.asciiValue!
+            #expect(ASCII.Code(byte)(case: .upper) == byte)
+            #expect(ASCII.Code(byte)(case: .lower) == byte)
         }
     }
 
@@ -118,8 +118,8 @@ struct `Case conversion maps ASCII letters to the requested case` {
     struct `ASCII letter cases differ by exactly 32` {
         @Test
         func `Conversion offset is exactly 32`() {
-            let lowerA = UInt8(ascii: "a")!
-            let upperA = UInt8(ascii: "A")!
+            let lowerA = Character("a").asciiValue!
+            let upperA = Character("A").asciiValue!
             #expect(lowerA - upperA == 32)
             #expect(lowerA - upperA == INCITS_4_1986.Case.Conversion.offset)
         }
