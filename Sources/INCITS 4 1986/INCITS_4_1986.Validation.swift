@@ -6,7 +6,7 @@ extension INCITS_4_1986 {
     }
 
     @inlinable
-    public static func isAllASCII<C: Swift.Collection>(
+    public static func isAllASCII<C: Swift::Collection>(
         _ bytes: C
     ) -> Bool where C.Element == UInt8 {
         ASCII::ASCII.isAllASCII(bytes)

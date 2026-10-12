@@ -15,7 +15,7 @@ extension INCITS_4_1986 {
 }
 
 extension INCITS_4_1986.ASCII
-where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
+where Source: Swift::Collection, Source.Element == ASCII::ASCII.Code {
 
     @inlinable
     public var bytes: Source { source }
@@ -32,7 +32,7 @@ where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
 }
 
 extension INCITS_4_1986.ASCII
-where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
+where Source: Swift::Collection, Source.Element == ASCII::ASCII.Code {
 
     @inlinable
     public func callAsFunction(case: INCITS_4_1986.Case) -> [ASCII::ASCII.Code] {
@@ -51,7 +51,7 @@ where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
 }
 
 extension INCITS_4_1986.ASCII
-where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
+where Source: Swift::Collection, Source.Element == ASCII::ASCII.Code {
 
     @inlinable
     public func trimming(_ characterSet: Set<ASCII::ASCII.Code>) -> Source.SubSequence {
@@ -60,10 +60,10 @@ where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
 }
 
 extension INCITS_4_1986.ASCII
-where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
+where Source: Swift::Collection, Source.Element == ASCII::ASCII.Code {
 
     @inlinable
-    public func elementsEqualCaseInsensitive<Other: Swift.Collection>(
+    public func elementsEqualCaseInsensitive<Other: Swift::Collection>(
         _ other: Other
     ) -> Bool where Other.Element == ASCII::ASCII.Code {
         guard source.count == other.count else { return false }
@@ -85,7 +85,7 @@ where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
     }
 
     @inlinable
-    public func hasPrefix<Prefix: Swift.Collection>(
+    public func hasPrefix<Prefix: Swift::Collection>(
         caseInsensitive prefix: Prefix
     ) -> Bool where Prefix.Element == ASCII::ASCII.Code {
         guard source.count >= prefix.count else { return false }
@@ -106,7 +106,7 @@ where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
 }
 
 extension INCITS_4_1986.ASCII
-where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
+where Source: Swift::Collection, Source.Element == ASCII::ASCII.Code {
 
     public typealias LineRange = Range<Source.Index>
 
@@ -160,7 +160,7 @@ where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
 }
 
 extension INCITS_4_1986.ASCII
-where Source: Swift.Collection, Source.Element == ASCII::ASCII.Code {
+where Source: Swift::Collection, Source.Element == ASCII::ASCII.Code {
 
     @inlinable
     public var isAllWhitespace: Bool {

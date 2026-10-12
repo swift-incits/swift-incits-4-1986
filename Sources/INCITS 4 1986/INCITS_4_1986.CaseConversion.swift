@@ -1,7 +1,7 @@
 extension INCITS_4_1986 {
 
     @inlinable
-    public static func convert<C: Swift.Collection>(
+    public static func convert<C: Swift::Collection>(
         _ codes: C,
         to case: INCITS_4_1986.Case
     ) -> [ASCII::ASCII.Code] where C.Element == ASCII::ASCII.Code {
