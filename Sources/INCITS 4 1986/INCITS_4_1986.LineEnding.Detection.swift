@@ -49,15 +49,14 @@ extension INCITS_4_1986.LineEnding.Detection {
 
             if byte == INCITS_4_1986.Character.Control.cr {
 
-                if i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.Character.Control.lf {
-                    hasCRLF = true
-                    i += 2
-                    continue
-                } else {
+                guard i + 1 < bytes.count && bytes[i + 1] == INCITS_4_1986.Character.Control.lf else {
                     hasStandaloneCR = true
                     i += 1
                     continue
                 }
+                hasCRLF = true
+                i += 2
+                continue
             } else if byte == INCITS_4_1986.Character.Control.lf {
                 hasStandaloneLF = true
                 i += 1

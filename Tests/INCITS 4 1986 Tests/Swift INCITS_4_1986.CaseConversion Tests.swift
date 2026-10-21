@@ -1,8 +1,8 @@
-import Testing
-
 import ASCII
 import Byte
 import Standard_Library_Extensions
+import Testing
+
 @testable import INCITS_4_1986
 
 @Suite

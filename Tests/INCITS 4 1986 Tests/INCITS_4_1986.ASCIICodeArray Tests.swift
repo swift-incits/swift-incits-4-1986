@@ -73,8 +73,7 @@ import Testing
             #expect(!Set<Character>.ascii.whitespaces.contains("a"))
         }
 
-        @Test func `IsWhitespace recognizes the CRLF grapheme cluster as a single whitespace unit`()
-        {
+        @Test func `IsWhitespace recognizes the CRLF grapheme cluster as a single whitespace unit`() {
             #expect(Set<Character>.ASCII.isWhitespace("\r\n"))
         }
 
