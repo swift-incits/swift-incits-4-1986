@@ -2,7 +2,7 @@ import Testing
 
 @testable import INCITS_4_1986
 
-extension INCITS_4_1986 {
+extension `INCITS_4_1986 Tests` {
     @Suite struct `INCITS validates the seven bit ASCII range` {
         @Suite struct `INCITS validation provides its declared operations` {
             @Test func `IsASCII is true for every byte below 0x80`() {

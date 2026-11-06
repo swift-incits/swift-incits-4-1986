@@ -2,7 +2,9 @@ import Testing
 
 @testable import INCITS_4_1986
 
-extension INCITS_4_1986.LineEnding.Detection {
+enum `INCITS_4_1986.LineEnding.Detection Tests` {}
+
+extension `INCITS_4_1986.LineEnding.Detection Tests` {
     @Suite struct `INCITS detects line ending styles and mixtures` {
         @Suite struct `INCITS line ending detection provides its declared operations` {
             @Test func `Detect identifies LF only text`() {

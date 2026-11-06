@@ -2,7 +2,9 @@ import Testing
 
 @testable import INCITS_4_1986
 
-extension INCITS_4_1986.FormatEffectors {
+enum `INCITS_4_1986.FormatEffectors Tests` {}
+
+extension `INCITS_4_1986.FormatEffectors Tests` {
     @Suite struct `INCITS normalization delegates to core ASCII` {
         @Suite struct `INCITS normalization provides its declared operations` {
             @Test func `Normalized converts LF to CRLF`() {

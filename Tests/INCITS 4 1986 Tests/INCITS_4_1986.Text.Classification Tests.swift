@@ -2,7 +2,9 @@ import Testing
 
 @testable import INCITS_4_1986
 
-extension INCITS_4_1986.Text.Classification {
+enum `INCITS_4_1986.Text.Classification Tests` {}
+
+extension `INCITS_4_1986.Text.Classification Tests` {
     @Suite struct `INCITS text predicates classify ASCII characters` {
         @Suite struct `INCITS text classification provides its declared operations` {
             @Test func `IsAllASCII rejects a string containing a multi-byte character`() {

@@ -2,7 +2,9 @@ import Testing
 
 @testable import INCITS_4_1986
 
-extension INCITS_4_1986 {
+enum `INCITS_4_1986 Tests` {}
+
+extension `INCITS_4_1986 Tests` {
     @Suite struct `INCITS conversion changes only ASCII letter case` {
         @Suite struct `INCITS case conversion provides its declared operations` {
             @Test func `Converting a string to upper case transforms letters only`() {
