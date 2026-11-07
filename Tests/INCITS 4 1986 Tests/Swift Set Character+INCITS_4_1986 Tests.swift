@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `Character sets expose ASCII whitespace operations` {
+enum `Swift Set Character+INCITS_4_1986 Tests` {}
+
+extension `Swift Set Character+INCITS_4_1986 Tests` {
+    @Suite
+    struct `Character sets expose ASCII whitespace operations` {
+    }
+}
+
+extension `Swift Set Character+INCITS_4_1986 Tests`.`Character sets expose ASCII whitespace operations` {
     @Suite
     struct `Character whitespace sets contain the specified characters` {
         @Test

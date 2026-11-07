@@ -9,8 +9,15 @@ private func isAllASCII(_ bytes: [Byte]) -> Bool {
     bytes.allSatisfy { (try? ASCII.Code($0)) != nil }
 }
 
-@Suite
-struct `ASCII operations respect character boundaries and empty inputs` {
+enum `Swift EdgeCases Tests` {}
+
+extension `Swift EdgeCases Tests` {
+    @Suite
+    struct `ASCII operations respect character boundaries and empty inputs` {
+    }
+}
+
+extension `Swift EdgeCases Tests`.`ASCII operations respect character boundaries and empty inputs` {
     @Suite
     struct `Classification respects the exact ASCII boundaries` {
         @Test

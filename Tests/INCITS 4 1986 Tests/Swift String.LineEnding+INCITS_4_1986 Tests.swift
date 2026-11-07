@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `Line ending styles produce the specified ASCII sequences` {
+enum `Swift String.LineEnding+INCITS_4_1986 Tests` {}
+
+extension `Swift String.LineEnding+INCITS_4_1986 Tests` {
+    @Suite
+    struct `Line ending styles produce the specified ASCII sequences` {
+    }
+}
+
+extension `Swift String.LineEnding+INCITS_4_1986 Tests`.`Line ending styles produce the specified ASCII sequences` {
     @Suite
     struct `Line ending constants convert consistently to strings and codes` {
         @Test

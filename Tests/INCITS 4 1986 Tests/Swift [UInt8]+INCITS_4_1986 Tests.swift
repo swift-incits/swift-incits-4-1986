@@ -9,8 +9,15 @@ private func isAllASCII(_ bytes: [Byte]) -> Bool {
     bytes.allSatisfy { (try? ASCII.Code($0)) != nil }
 }
 
-@Suite
-struct `Byte and code arrays expose ASCII operations` {
+enum `Swift [UInt8]+INCITS_4_1986 Tests` {}
+
+extension `Swift [UInt8]+INCITS_4_1986 Tests` {
+    @Suite
+    struct `Byte and code arrays expose ASCII operations` {
+    }
+}
+
+extension `Swift [UInt8]+INCITS_4_1986 Tests`.`Byte and code arrays expose ASCII operations` {
     @Suite
     struct `Arrays validate convert and classify ASCII values` {
         @Test

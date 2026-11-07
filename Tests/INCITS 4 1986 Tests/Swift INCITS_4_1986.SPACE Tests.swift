@@ -5,9 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `ASCII space obeys its classification and value contracts` {
+enum `Swift INCITS_4_1986.SPACE Tests` {}
 
+extension `Swift INCITS_4_1986.SPACE Tests` {
+    @Suite
+    struct `ASCII space obeys its classification and value contracts` {
+    }
+}
+
+extension `Swift INCITS_4_1986.SPACE Tests`.`ASCII space obeys its classification and value contracts` {
     @Suite
     struct `Space has the specified ASCII value and classifications` {
         @Test

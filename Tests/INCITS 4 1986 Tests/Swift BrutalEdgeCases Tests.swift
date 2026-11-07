@@ -9,8 +9,15 @@ private func isAllASCII(_ bytes: [Byte]) -> Bool {
     bytes.allSatisfy { (try? ASCII.Code($0)) != nil }
 }
 
-@Suite
-struct `ASCII operations preserve invariants across exhaustive inputs` {
+enum `Swift BrutalEdgeCases Tests` {}
+
+extension `Swift BrutalEdgeCases Tests` {
+    @Suite
+    struct `ASCII operations preserve invariants across exhaustive inputs` {
+    }
+}
+
+extension `Swift BrutalEdgeCases Tests`.`ASCII operations preserve invariants across exhaustive inputs` {
     @Suite
     struct `Every byte obeys classification and case conversion rules` {
         @Test(arguments: Array(UInt8(0)...UInt8(255)))

@@ -7,6 +7,9 @@ import Testing
 
 @Suite
 struct `Case conversion maps ASCII letters to the requested case` {
+}
+
+extension `Case conversion maps ASCII letters to the requested case` {
     @Suite
     struct `String case conversion preserves characters outside ASCII` {
         @Test

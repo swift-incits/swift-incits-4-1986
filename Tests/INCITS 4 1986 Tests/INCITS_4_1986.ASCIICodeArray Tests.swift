@@ -2,7 +2,14 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite struct `Code arrays provide INCITS ASCII conversions` {
+enum `INCITS_4_1986.ASCIICodeArray Tests` {}
+
+extension `INCITS_4_1986.ASCIICodeArray Tests` {
+    @Suite struct `Code arrays provide INCITS ASCII conversions` {
+    }
+}
+
+extension `INCITS_4_1986.ASCIICodeArray Tests`.`Code arrays provide INCITS ASCII conversions` {
     @Suite struct `ASCII collection adapters provides its declared operations` {
         @Test func `Init ascii string succeeds for all-ASCII input`() {
             let codes = [ASCII::ASCII.Code](ascii: "Hi!")
@@ -59,7 +66,12 @@ import Testing
     @Suite struct `ASCII collection adapters integrates with its consumers` {}
 }
 
-@Suite struct `Character sets provide INCITS whitespace operations` {
+extension `INCITS_4_1986.ASCIICodeArray Tests` {
+    @Suite struct `Character sets provide INCITS whitespace operations` {
+    }
+}
+
+extension `INCITS_4_1986.ASCIICodeArray Tests`.`Character sets provide INCITS whitespace operations` {
     @Suite struct `ASCII collection adapters provides its declared operations` {
         @Test func `Whitespaces contains SPACE HTAB LF CR and CRLF grapheme`() {
             #expect(Set<Character>.ascii.whitespaces.contains(" "))

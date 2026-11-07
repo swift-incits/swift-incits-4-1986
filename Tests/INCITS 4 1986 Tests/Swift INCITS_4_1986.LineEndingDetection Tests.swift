@@ -5,9 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `INCITS detects ASCII line ending styles` {
+enum `Swift INCITS_4_1986.LineEndingDetection Tests` {}
 
+extension `Swift INCITS_4_1986.LineEndingDetection Tests` {
+    @Suite
+    struct `INCITS detects ASCII line ending styles` {
+    }
+}
+
+extension `Swift INCITS_4_1986.LineEndingDetection Tests`.`INCITS detects ASCII line ending styles` {
     @Suite
     struct `Detection identifies the preferred line ending style` {
         @Test(arguments: [

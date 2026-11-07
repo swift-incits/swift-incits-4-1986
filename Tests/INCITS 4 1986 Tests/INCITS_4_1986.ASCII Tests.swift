@@ -2,7 +2,14 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite struct `INCITS views expose code and string operations` {
+enum `INCITS_4_1986.ASCII Tests` {}
+
+extension `INCITS_4_1986.ASCII Tests` {
+    @Suite struct `INCITS views expose code and string operations` {
+    }
+}
+
+extension `INCITS_4_1986.ASCII Tests`.`INCITS views expose code and string operations` {
     @Suite struct `INCITS views provides its declared operations` {
         @Test func `Code collection isAllASCII is trivially true`() {
             let codes = [ASCII::ASCII.Code](ascii: "hello")!

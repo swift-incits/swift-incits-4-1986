@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `INCITS classifies ASCII character codes` {
+enum `Swift INCITS_4_1986.CharacterClassification Tests` {}
+
+extension `Swift INCITS_4_1986.CharacterClassification Tests` {
+    @Suite
+    struct `INCITS classifies ASCII character codes` {
+    }
+}
+
+extension `Swift INCITS_4_1986.CharacterClassification Tests`.`INCITS classifies ASCII character codes` {
     @Suite
     struct `Whitespace classification recognizes the ASCII whitespace set` {
         @Test(arguments: [

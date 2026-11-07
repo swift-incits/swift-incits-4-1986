@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `Format effectors normalize ASCII line endings` {
+enum `Swift INCITS_4_1986.FormatEffectors Tests` {}
+
+extension `Swift INCITS_4_1986.FormatEffectors Tests` {
+    @Suite
+    struct `Format effectors normalize ASCII line endings` {
+    }
+}
+
+extension `Swift INCITS_4_1986.FormatEffectors Tests`.`Format effectors normalize ASCII line endings` {
     @Suite
     struct `Line ending normalization preserves text content` {
         @Test

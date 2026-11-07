@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `String operations trim the requested character sets` {
+enum `Swift INCITS_4_1986.StringOperations Tests` {}
+
+extension `Swift INCITS_4_1986.StringOperations Tests` {
+    @Suite
+    struct `String operations trim the requested character sets` {
+    }
+}
+
+extension `Swift INCITS_4_1986.StringOperations Tests`.`String operations trim the requested character sets` {
     @Suite
     struct `Strings trim the requested characters from both ends` {
         @Test

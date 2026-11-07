@@ -5,9 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `INCITS classifies ASCII text` {
+enum `Swift INCITS_4_1986.StringClassification Tests` {}
 
+extension `Swift INCITS_4_1986.StringClassification Tests` {
+    @Suite
+    struct `INCITS classifies ASCII text` {
+    }
+}
+
+extension `Swift INCITS_4_1986.StringClassification Tests`.`INCITS classifies ASCII text` {
     @Suite
     struct `Text predicates recognize text containing only ASCII` {
         @Test(arguments: [

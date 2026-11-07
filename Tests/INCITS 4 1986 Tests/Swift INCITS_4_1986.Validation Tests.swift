@@ -5,9 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `ASCII validation rejects every byte outside the seven bit range` {
+enum `Swift INCITS_4_1986.Validation Tests` {}
 
+extension `Swift INCITS_4_1986.Validation Tests` {
+    @Suite
+    struct `ASCII validation rejects every byte outside the seven bit range` {
+    }
+}
+
+extension `Swift INCITS_4_1986.Validation Tests`.`ASCII validation rejects every byte outside the seven bit range` {
     @Suite
     struct `Byte collections validate every member before conversion` {
         @Test

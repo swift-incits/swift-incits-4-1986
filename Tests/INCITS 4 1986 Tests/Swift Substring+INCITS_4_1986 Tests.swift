@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `Substrings expose the INCITS ASCII view` {
+enum `Swift Substring+INCITS_4_1986 Tests` {}
+
+extension `Swift Substring+INCITS_4_1986 Tests` {
+    @Suite
+    struct `Substrings expose the INCITS ASCII view` {
+    }
+}
+
+extension `Swift Substring+INCITS_4_1986 Tests`.`Substrings expose the INCITS ASCII view` {
     @Suite
     struct `Substrings provide ASCII conversion and trimming` {
         @Test

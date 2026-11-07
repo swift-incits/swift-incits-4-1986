@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `StringProtocol exposes INCITS views and core ASCII conversions` {
+enum `Swift StringProtocol+INCITS_4_1986 Tests` {}
+
+extension `Swift StringProtocol+INCITS_4_1986 Tests` {
+    @Suite
+    struct `StringProtocol exposes INCITS views and core ASCII conversions` {
+    }
+}
+
+extension `Swift StringProtocol+INCITS_4_1986 Tests`.`StringProtocol exposes INCITS views and core ASCII conversions` {
     @Suite
     struct `Strings and substrings expose the ASCII view` {
         @Test

@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `ASCII digit values decode decimal and hexadecimal characters` {
+enum `Swift INCITS_4_1986.NumericParsing Tests` {}
+
+extension `Swift INCITS_4_1986.NumericParsing Tests` {
+    @Suite
+    struct `ASCII digit values decode decimal and hexadecimal characters` {
+    }
+}
+
+extension `Swift INCITS_4_1986.NumericParsing Tests`.`ASCII digit values decode decimal and hexadecimal characters` {
     @Suite
     struct `Decimal digit values decode zero through nine` {
         @Test

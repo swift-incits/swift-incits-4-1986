@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `ASCII exposes the specified control character constants` {
+enum `Swift INCITS_4_1986.ControlCharacters Tests` {}
+
+extension `Swift INCITS_4_1986.ControlCharacters Tests` {
+    @Suite
+    struct `ASCII exposes the specified control character constants` {
+    }
+}
+
+extension `Swift INCITS_4_1986.ControlCharacters Tests`.`ASCII exposes the specified control character constants` {
     @Suite
     struct `Control constants have the specified numeric values` {
         @Test

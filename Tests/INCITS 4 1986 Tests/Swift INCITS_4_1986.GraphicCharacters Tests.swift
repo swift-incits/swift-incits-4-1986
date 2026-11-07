@@ -5,8 +5,15 @@ import Testing
 
 @testable import INCITS_4_1986
 
-@Suite
-struct `ASCII exposes the specified graphic character constants` {
+enum `Swift INCITS_4_1986.GraphicCharacters Tests` {}
+
+extension `Swift INCITS_4_1986.GraphicCharacters Tests` {
+    @Suite
+    struct `ASCII exposes the specified graphic character constants` {
+    }
+}
+
+extension `Swift INCITS_4_1986.GraphicCharacters Tests`.`ASCII exposes the specified graphic character constants` {
     @Suite
     struct `Digit constants map zero through nine to their ASCII values` {
         @Test
