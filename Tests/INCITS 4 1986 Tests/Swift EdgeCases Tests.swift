@@ -204,7 +204,7 @@ struct `ASCII operations respect character boundaries and empty inputs` {
 
         @Test
         func `Every byte above the ASCII range is rejected`() {
-            for value in UInt8(0x80)...UInt8(0xFF) {
+            (UInt8(0x80)...UInt8(0xFF)).forEach { value in
                 #expect(
                     !isAllASCII([Byte(bitPattern: value)]),
                     "Byte 0x\(String(value, radix: 16)) should be invalid"
@@ -256,7 +256,7 @@ struct `ASCII operations respect character boundaries and empty inputs` {
         @Test
         func `All ASCII characters roundtrip`() {
 
-            for byte in ASCII::ASCII.Code.nul.underlying...ASCII::ASCII.Code.del.underlying {
+            (ASCII::ASCII.Code.nul.underlying...ASCII::ASCII.Code.del.underlying).forEach { byte in
                 let scalar = UnicodeScalar(byte)
                 let char = Character(scalar)
                 if let converted = char.asciiValue {

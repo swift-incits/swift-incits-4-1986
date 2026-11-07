@@ -403,13 +403,13 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         @Test
         func `Case conversion cycles preserve every ASCII letter`() {
 
-            for byte in ASCII::ASCII.Code.A.underlying...ASCII::ASCII.Code.Z.underlying {
+            (ASCII::ASCII.Code.A.underlying...ASCII::ASCII.Code.Z.underlying).forEach { byte in
                 let lower = ASCII.Code(byte)(case: .lower)
                 let backToUpper = ASCII.Code(lower)(case: .upper)
                 #expect(backToUpper == byte, "Round-trip failed for 0x\(String(byte, radix: 16))")
             }
 
-            for byte in ASCII::ASCII.Code.a.underlying...ASCII::ASCII.Code.z.underlying {
+            (ASCII::ASCII.Code.a.underlying...ASCII::ASCII.Code.z.underlying).forEach { byte in
                 let upper = ASCII.Code(byte)(case: .upper)
                 let backToLower = ASCII.Code(upper)(case: .lower)
                 #expect(backToLower == byte, "Round-trip failed for 0x\(String(byte, radix: 16))")
@@ -457,7 +457,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test
         func `Validation rejects every nonASCII byte individually`() {
-            for value in UInt8(128)...UInt8(255) {
+            (UInt8(128)...UInt8(255)).forEach { value in
                 let byte = Byte(bitPattern: value)
                 #expect(!isAllASCII([byte]), "Byte 0x\(String(value, radix: 16)) should fail")
             }
@@ -466,7 +466,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         @Test
         func `Validation rejects a nonASCII byte at every array position`() {
             let size = 100
-            for position in 0..<size {
+            (0..<size).forEach { position in
                 var bytes: [Byte] = Array(repeating: ASCII::ASCII.Code.A.byte, count: size)
                 bytes[position] = Byte(0x80)
                 #expect(!isAllASCII(bytes), "Should detect non-ASCII at position \(position)")
@@ -475,7 +475,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test
         func `Validation checks every possible first byte`() {
-            for firstByte in UInt8(0)...UInt8(255) {
+            (UInt8(0)...UInt8(255)).forEach { firstByte in
                 let array: [Byte] = [Byte(bitPattern: firstByte), ASCII::ASCII.Code.A.byte, ASCII::ASCII.Code.B.byte]
                 let expected = firstByte <= 0x7F
                 #expect(
@@ -487,7 +487,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test
         func `Validation checks every possible last byte`() {
-            for lastByte in UInt8(0)...UInt8(255) {
+            (UInt8(0)...UInt8(255)).forEach { lastByte in
                 let array: [Byte] = [ASCII::ASCII.Code.A.byte, ASCII::ASCII.Code.B.byte, Byte(bitPattern: lastByte)]
                 let expected = lastByte <= 0x7F
                 #expect(
@@ -503,7 +503,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
         @Test
         func `Every ASCII character survives conversion to a string and back`() {
 
-            for value in UInt8(0)...UInt8(127) {
+            (UInt8(0)...UInt8(127)).forEach { value in
                 let byte = Byte(bitPattern: value)
                 if let str = String(ascii: [byte]) {
                     if let backToCodes = [ASCII.Code](ascii: str) {
@@ -518,7 +518,7 @@ struct `ASCII operations preserve invariants across exhaustive inputs` {
 
         @Test
         func `String conversion fails for non-ASCII`() {
-            for value in UInt8(128)...UInt8(255) {
+            (UInt8(128)...UInt8(255)).forEach { value in
                 let byte = Byte(bitPattern: value)
                 #expect(
                     String(ascii: [byte]) == nil,

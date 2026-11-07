@@ -223,7 +223,7 @@ struct `INCITS classifies ASCII character codes` {
     struct `Character classifications obey their logical relationships` {
         @Test
         func `Control and printable are mutually exclusive`() {
-            for byte in UInt8(0)...UInt8(127) {
+            (UInt8(0)...UInt8(127)).forEach { byte in
                 let isControl = INCITS_4_1986.Classification.isControl(byte)
                 let isPrintable = INCITS_4_1986.Classification.isPrintable(byte)
                 #expect(
@@ -235,7 +235,7 @@ struct `INCITS classifies ASCII character codes` {
 
         @Test
         func `Every ASCII byte is either control or printable`() {
-            for byte in UInt8(0)...UInt8(127) {
+            (UInt8(0)...UInt8(127)).forEach { byte in
                 let isControl = INCITS_4_1986.Classification.isControl(byte)
                 let isPrintable = INCITS_4_1986.Classification.isPrintable(byte)
                 #expect(
@@ -247,7 +247,7 @@ struct `INCITS classifies ASCII character codes` {
 
         @Test
         func `Uppercase and lowercase are mutually exclusive`() {
-            for byte in UInt8(0)...UInt8(127) {
+            (UInt8(0)...UInt8(127)).forEach { byte in
                 let isUpper = INCITS_4_1986.Classification.isUppercase(byte)
                 let isLower = INCITS_4_1986.Classification.isLowercase(byte)
                 #expect(
@@ -259,7 +259,7 @@ struct `INCITS classifies ASCII character codes` {
 
         @Test
         func `Letter implies alphanumeric`() {
-            for byte in UInt8(0)...UInt8(127) {
+            (UInt8(0)...UInt8(127)).forEach { byte in
                 if INCITS_4_1986.Classification.isLetter(byte) {
                     #expect(INCITS_4_1986.Classification.isAlphanumeric(byte))
                 }
@@ -268,7 +268,7 @@ struct `INCITS classifies ASCII character codes` {
 
         @Test
         func `Digit implies alphanumeric`() {
-            for byte in UInt8(0)...UInt8(127) {
+            (UInt8(0)...UInt8(127)).forEach { byte in
                 if INCITS_4_1986.Classification.isDigit(byte) {
                     #expect(INCITS_4_1986.Classification.isAlphanumeric(byte))
                 }

@@ -90,7 +90,7 @@ struct `ASCII digit values decode decimal and hexadecimal characters` {
 
         @Test
         func `Digit decoding parses all decimal digits 0-9`() {
-            for i in UInt8(0)...UInt8(9) {
+            (UInt8(0)...UInt8(9)).forEach { i in
                 let digitByte = INCITS_4_1986.Character.Graphic.`0` + i
                 #expect(ASCII.Code(digitByte).hexValue == i)
             }
@@ -98,7 +98,7 @@ struct `ASCII digit values decode decimal and hexadecimal characters` {
 
         @Test
         func `Digit decoding parses all uppercase hex letters A-F`() {
-            for i in UInt8(0)...UInt8(5) {
+            (UInt8(0)...UInt8(5)).forEach { i in
                 let letterByte = INCITS_4_1986.Character.Graphic.A + i
                 #expect(ASCII.Code(letterByte).hexValue == 10 + i)
             }
@@ -106,7 +106,7 @@ struct `ASCII digit values decode decimal and hexadecimal characters` {
 
         @Test
         func `Digit decoding parses all lowercase hex letters a-f`() {
-            for i in UInt8(0)...UInt8(5) {
+            (UInt8(0)...UInt8(5)).forEach { i in
                 let letterByte = INCITS_4_1986.Character.Graphic.a + i
                 #expect(ASCII.Code(letterByte).hexValue == 10 + i)
             }
@@ -129,7 +129,7 @@ struct `ASCII digit values decode decimal and hexadecimal characters` {
     struct `Digit conversion preserves every representable digit value` {
         @Test
         func `Decimal digits preserve values zero through nine`() {
-            for value in UInt8(0)...UInt8(9) {
+            (UInt8(0)...UInt8(9)).forEach { value in
                 let digitByte = INCITS_4_1986.Character.Graphic.`0` + value
                 let parsed = ASCII.Code(digitByte).digitValue
                 #expect(parsed == value)
@@ -195,7 +195,7 @@ struct `ASCII digit values decode decimal and hexadecimal characters` {
     struct `Hexadecimal letter cases decode to the same values` {
         @Test
         func `Uppercase and lowercase hex letters parse to same value`() {
-            for i in UInt8(0)...UInt8(5) {
+            (UInt8(0)...UInt8(5)).forEach { i in
                 let upperByte = INCITS_4_1986.Character.Graphic.A + i
                 let lowerByte = INCITS_4_1986.Character.Graphic.a + i
 
