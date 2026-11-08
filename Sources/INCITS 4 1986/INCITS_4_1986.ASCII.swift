@@ -128,13 +128,14 @@ where Source: Swift::Collection, Source.Element == ASCII::ASCII.Code {
                 ranges.append(lineStart..<index)
 
                 let next = source.index(after: index)
-                index = if next < source.endIndex && source[next] == .lf {
+                index =
+                    if next < source.endIndex && source[next] == .lf {
 
-                    source.index(after: next)
-                } else {
+                        source.index(after: next)
+                    } else {
 
-                    next
-                }
+                        next
+                    }
                 lineStart = index
             } else if code == .lf {
 
