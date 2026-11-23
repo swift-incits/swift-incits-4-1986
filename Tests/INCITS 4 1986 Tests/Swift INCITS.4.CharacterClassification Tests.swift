@@ -1,0 +1,324 @@
+import ASCII
+import Byte
+import Standard_Library_Extensions
+import Testing
+
+@testable import INCITS_4_1986
+
+enum `Swift INCITS.4.1986.CharacterClassification Tests` {}
+
+extension `Swift INCITS.4.1986.CharacterClassification Tests` {
+    @Suite
+    struct `INCITS classifies ASCII character codes` {
+    }
+}
+
+extension `Swift INCITS.4.1986.CharacterClassification Tests`.`INCITS classifies ASCII character codes` {
+    @Suite
+    struct `Whitespace classification recognizes the ASCII whitespace set` {
+        @Test(arguments: [
+            INCITS.`4`.SPACE.sp,
+            INCITS.`4`.Character.Control.htab,
+            INCITS.`4`.Character.Control.lf,
+            INCITS.`4`.Character.Control.cr,
+        ])
+        func `The predicate recognizes ASCII whitespace characters`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isWhitespace(byte))
+        }
+
+        @Test(arguments: [
+            INCITS.`4`.Character.Graphic.A,
+            INCITS.`4`.Character.Graphic.`0`,
+            INCITS.`4`.Character.Control.nul,
+            INCITS.`4`.Character.Graphic.exclamationPoint,
+        ])
+        func `The predicate rejects non-whitespace characters`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isWhitespace(byte))
+        }
+    }
+
+    @Suite
+    struct `Control classification recognizes the ASCII control ranges` {
+        @Test(
+            arguments: Array(
+                INCITS.`4`.Character.Control.nul...INCITS.`4`.Character.Control.us
+            )
+        )
+        func `The predicate recognizes control characters 0x00-0x1F`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isControl(byte))
+        }
+
+        @Test
+        func `The predicate recognizes DEL as control character`() {
+            #expect(INCITS.`4`.Classification.isControl(INCITS.`4`.Character.Control.del))
+        }
+
+        @Test(arguments: Array(INCITS.`4`.SPACE.sp...UInt8(0x7E)))
+        func `The predicate rejects printable characters as control`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isControl(byte))
+        }
+    }
+
+    @Suite
+    struct `Digit classification recognizes decimal digits` {
+        @Test(
+            arguments: Array(
+                INCITS.`4`.Character.Graphic.`0`...INCITS.`4`.Character.Graphic.`9`
+            )
+        )
+        func `The predicate recognizes ASCII digits 0-9`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isDigit(byte))
+        }
+
+        @Test(arguments: [
+            INCITS.`4`.Character.Graphic.A,
+            INCITS.`4`.Character.Graphic.a,
+            INCITS.`4`.SPACE.sp,
+            UInt8(0x2F),
+            UInt8(0x3A),
+        ])
+        func `The predicate rejects non-digit characters`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isDigit(byte))
+        }
+    }
+
+    @Suite
+    struct `Letter classification distinguishes ASCII letter cases` {
+        @Test(
+            arguments: Array(INCITS.`4`.Character.Graphic.A...INCITS.`4`.Character.Graphic.Z)
+        )
+        func `The predicate recognizes uppercase letters A-Z`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isLetter(byte))
+            #expect(INCITS.`4`.Classification.isUppercase(byte))
+            #expect(!INCITS.`4`.Classification.isLowercase(byte))
+        }
+
+        @Test(
+            arguments: Array(INCITS.`4`.Character.Graphic.a...INCITS.`4`.Character.Graphic.z)
+        )
+        func `The predicate recognizes lowercase letters a-z`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isLetter(byte))
+            #expect(INCITS.`4`.Classification.isLowercase(byte))
+            #expect(!INCITS.`4`.Classification.isUppercase(byte))
+        }
+
+        @Test(arguments: [
+            INCITS.`4`.Character.Graphic.`0`,
+            INCITS.`4`.SPACE.sp,
+            INCITS.`4`.Character.Graphic.exclamationPoint,
+            UInt8(0x40),
+            UInt8(0x5B),
+            UInt8(0x60),
+            UInt8(0x7B),
+        ])
+        func `The predicate rejects non-letter characters`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isLetter(byte))
+        }
+    }
+
+    @Suite
+    struct `Alphanumeric classification accepts letters and digits` {
+        @Test(
+            arguments:
+                Array(INCITS.`4`.Character.Graphic.`0`...INCITS.`4`.Character.Graphic.`9`)
+                + Array(INCITS.`4`.Character.Graphic.A...INCITS.`4`.Character.Graphic.Z)
+                + Array(INCITS.`4`.Character.Graphic.a...INCITS.`4`.Character.Graphic.z)
+        )
+        func `The predicate recognizes alphanumeric characters`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isAlphanumeric(byte))
+        }
+
+        @Test(arguments: [
+            INCITS.`4`.SPACE.sp,
+            INCITS.`4`.Character.Graphic.exclamationPoint,
+            INCITS.`4`.Character.Control.lf,
+            UInt8(0x40),
+            UInt8(0x5B),
+            UInt8(0x60),
+        ])
+        func `The predicate rejects non-alphanumeric characters`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isAlphanumeric(byte))
+        }
+    }
+
+    @Suite
+    struct `Visible classification accepts graphic characters` {
+        @Test(arguments: Array(INCITS.`4`.Character.Graphic.exclamationPoint...UInt8(0x7E)))
+        func `The predicate recognizes visible characters 0x21-0x7E`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isVisible(byte))
+        }
+
+        @Test
+        func `The predicate rejects SPACE as visible`() {
+            #expect(!INCITS.`4`.Classification.isVisible(INCITS.`4`.SPACE.sp))
+        }
+
+        @Test(
+            arguments: Array(
+                INCITS.`4`.Character.Control.nul...INCITS.`4`.Character.Control.us
+            ) + [
+                INCITS.`4`.Character.Control.del
+            ]
+        )
+        func `The predicate rejects control characters as visible`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isVisible(byte))
+        }
+    }
+
+    @Suite
+    struct `Printable classification includes space and graphic characters` {
+        @Test(arguments: Array(INCITS.`4`.SPACE.sp...UInt8(0x7E)))
+        func `The predicate recognizes printable characters 0x20-0x7E`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isPrintable(byte))
+        }
+
+        @Test
+        func `The predicate includes SPACE as printable`() {
+            #expect(INCITS.`4`.Classification.isPrintable(INCITS.`4`.SPACE.sp))
+        }
+
+        @Test(
+            arguments: Array(
+                INCITS.`4`.Character.Control.nul...INCITS.`4`.Character.Control.us
+            ) + [
+                INCITS.`4`.Character.Control.del
+            ]
+        )
+        func `The predicate rejects control characters as printable`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isPrintable(byte))
+        }
+    }
+
+    @Suite
+    struct `Hexadecimal classification accepts decimal digits and letters A through F` {
+        @Test(
+            arguments: Array(
+                INCITS.`4`.Character.Graphic.`0`...INCITS.`4`.Character.Graphic.`9`
+            )
+        )
+        func `The predicate recognizes hex digits 0-9`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isHexDigit(byte))
+        }
+
+        @Test(
+            arguments: Array(INCITS.`4`.Character.Graphic.A...INCITS.`4`.Character.Graphic.F)
+        )
+        func `The predicate recognizes hex digits A-F`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isHexDigit(byte))
+        }
+
+        @Test(
+            arguments: Array(INCITS.`4`.Character.Graphic.a...INCITS.`4`.Character.Graphic.f)
+        )
+        func `The predicate recognizes hex digits a-f`(byte: UInt8) {
+            #expect(INCITS.`4`.Classification.isHexDigit(byte))
+        }
+
+        @Test(arguments: [
+            INCITS.`4`.Character.Graphic.G,
+            INCITS.`4`.Character.Graphic.g,
+            INCITS.`4`.Character.Graphic.Z,
+            INCITS.`4`.Character.Graphic.z,
+            INCITS.`4`.SPACE.sp,
+        ])
+        func `The predicate rejects non-hex characters`(byte: UInt8) {
+            #expect(!INCITS.`4`.Classification.isHexDigit(byte))
+        }
+    }
+
+    @Suite
+    struct `Character classifications obey their logical relationships` {
+        @Test
+        func `Control and printable are mutually exclusive`() {
+            (UInt8(0)...UInt8(127)).forEach { byte in
+                let isControl = INCITS.`4`.Classification.isControl(byte)
+                let isPrintable = INCITS.`4`.Classification.isPrintable(byte)
+                #expect(
+                    isControl != isPrintable,
+                    "Byte \(byte) should be either control or printable, not both"
+                )
+            }
+        }
+
+        @Test
+        func `Every ASCII byte is either control or printable`() {
+            (UInt8(0)...UInt8(127)).forEach { byte in
+                let isControl = INCITS.`4`.Classification.isControl(byte)
+                let isPrintable = INCITS.`4`.Classification.isPrintable(byte)
+                #expect(
+                    isControl || isPrintable,
+                    "Byte \(byte) must be either control or printable"
+                )
+            }
+        }
+
+        @Test
+        func `Uppercase and lowercase are mutually exclusive`() {
+            (UInt8(0)...UInt8(127)).forEach { byte in
+                let isUpper = INCITS.`4`.Classification.isUppercase(byte)
+                let isLower = INCITS.`4`.Classification.isLowercase(byte)
+                #expect(
+                    !(isUpper && isLower),
+                    "Byte \(byte) cannot be both uppercase and lowercase"
+                )
+            }
+        }
+
+        @Test
+        func `Letter implies alphanumeric`() {
+            (UInt8(0)...UInt8(127)).forEach { byte in
+                if INCITS.`4`.Classification.isLetter(byte) {
+                    #expect(INCITS.`4`.Classification.isAlphanumeric(byte))
+                }
+            }
+        }
+
+        @Test
+        func `Digit implies alphanumeric`() {
+            (UInt8(0)...UInt8(127)).forEach { byte in
+                if INCITS.`4`.Classification.isDigit(byte) {
+                    #expect(INCITS.`4`.Classification.isAlphanumeric(byte))
+                }
+            }
+        }
+    }
+
+    @Suite
+    struct `Classification ranges include exactly their boundary values` {
+        @Test
+        func `Digit boundaries are precise`() {
+            #expect(!INCITS.`4`.Classification.isDigit(UInt8(0x2F)))
+            #expect(INCITS.`4`.Classification.isDigit(UInt8(0x30)))
+            #expect(INCITS.`4`.Classification.isDigit(UInt8(0x39)))
+            #expect(!INCITS.`4`.Classification.isDigit(UInt8(0x3A)))
+        }
+
+        @Test
+        func `Letter boundaries are precise`() {
+            #expect(!INCITS.`4`.Classification.isLetter(UInt8(0x40)))
+            #expect(INCITS.`4`.Classification.isLetter(UInt8(0x41)))
+            #expect(INCITS.`4`.Classification.isLetter(UInt8(0x5A)))
+            #expect(!INCITS.`4`.Classification.isLetter(UInt8(0x5B)))
+            #expect(!INCITS.`4`.Classification.isLetter(UInt8(0x60)))
+            #expect(INCITS.`4`.Classification.isLetter(UInt8(0x61)))
+            #expect(INCITS.`4`.Classification.isLetter(UInt8(0x7A)))
+            #expect(!INCITS.`4`.Classification.isLetter(UInt8(0x7B)))
+        }
+
+        @Test
+        func `Visible boundaries are precise`() {
+            #expect(!INCITS.`4`.Classification.isVisible(UInt8(0x20)))
+            #expect(INCITS.`4`.Classification.isVisible(UInt8(0x21)))
+            #expect(INCITS.`4`.Classification.isVisible(UInt8(0x7E)))
+            #expect(!INCITS.`4`.Classification.isVisible(UInt8(0x7F)))
+        }
+
+        @Test
+        func `Printable boundaries are precise`() {
+            #expect(!INCITS.`4`.Classification.isPrintable(UInt8(0x1F)))
+            #expect(INCITS.`4`.Classification.isPrintable(UInt8(0x20)))
+            #expect(INCITS.`4`.Classification.isPrintable(UInt8(0x7E)))
+            #expect(!INCITS.`4`.Classification.isPrintable(UInt8(0x7F)))
+        }
+    }
+}
