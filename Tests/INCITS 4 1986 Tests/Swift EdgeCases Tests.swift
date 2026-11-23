@@ -451,7 +451,7 @@ extension `Swift EdgeCases Tests`.`ASCII operations respect character boundaries
     struct `Whitespace sets contain the specified ASCII characters` {
         @Test
         func `INCITS whitespace set is exactly 4 characters`() {
-            #expect(INCITS_4_1986.whitespaces.count == 4)
+            #expect(INCITS.`4`.`1986`.whitespaces.count == 4)
         }
 
         @Test
@@ -462,7 +462,7 @@ extension `Swift EdgeCases Tests`.`ASCII operations respect character boundaries
         @Test
         func `Whitespace set contains only ASCII whitespace`() {
 
-            let ws = INCITS_4_1986.whitespaces.compactMap { String(ascii: [$0.byte]) }
+            let ws = INCITS.`4`.`1986`.whitespaces.compactMap { String(ascii: [$0.byte]) }
             #expect(ws.contains(" "))
             #expect(ws.contains("\t"))
             #expect(ws.contains("\n"))
@@ -505,23 +505,23 @@ extension `Swift EdgeCases Tests`.`ASCII operations respect character boundaries
     struct `ASCII constants match their specified values` {
         @Test
         func `Whitespaces constant has 4 bytes`() {
-            #expect(INCITS_4_1986.whitespaces.count == 4)
-            #expect(INCITS_4_1986.whitespaces.contains(ASCII::ASCII.Code.htab))
-            #expect(INCITS_4_1986.whitespaces.contains(ASCII::ASCII.Code.lf))
-            #expect(INCITS_4_1986.whitespaces.contains(ASCII::ASCII.Code.cr))
-            #expect(INCITS_4_1986.whitespaces.contains(ASCII::ASCII.Code.sp))
+            #expect(INCITS.`4`.`1986`.whitespaces.count == 4)
+            #expect(INCITS.`4`.`1986`.whitespaces.contains(ASCII::ASCII.Code.htab))
+            #expect(INCITS.`4`.`1986`.whitespaces.contains(ASCII::ASCII.Code.lf))
+            #expect(INCITS.`4`.`1986`.whitespaces.contains(ASCII::ASCII.Code.cr))
+            #expect(INCITS.`4`.`1986`.whitespaces.contains(ASCII::ASCII.Code.sp))
         }
 
         @Test
         func `Crlf constant is exactly two bytes`() {
-            #expect(INCITS_4_1986.Character.Control.crlf.count == 2)
-            #expect(INCITS_4_1986.Character.Control.crlf == [ASCII::ASCII.Code.cr.underlying, ASCII::ASCII.Code.lf.underlying])
+            #expect(INCITS.`4`.`1986`.Character.Control.crlf.count == 2)
+            #expect(INCITS.`4`.`1986`.Character.Control.crlf == [ASCII::ASCII.Code.cr.underlying, ASCII::ASCII.Code.lf.underlying])
         }
 
         @Test
         func `Crlf order is CR then LF`() {
-            #expect(INCITS_4_1986.Character.Control.crlf[0] == ASCII::ASCII.Code.cr.underlying)
-            #expect(INCITS_4_1986.Character.Control.crlf[1] == ASCII::ASCII.Code.lf.underlying)
+            #expect(INCITS.`4`.`1986`.Character.Control.crlf[0] == ASCII::ASCII.Code.cr.underlying)
+            #expect(INCITS.`4`.`1986`.Character.Control.crlf[1] == ASCII::ASCII.Code.lf.underlying)
         }
     }
 }

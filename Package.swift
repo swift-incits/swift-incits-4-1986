@@ -18,6 +18,7 @@ let package = Package(
         )
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-incits/swift-incits.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-ascii.git",
@@ -32,6 +33,7 @@ let package = Package(
         .target(
             name: "INCITS 4 1986",
             dependencies: [
+                .product(name: "INCITS", package: "swift-incits"),
                 .product(
                     name: "ASCII",
                     package: "swift-ascii"
